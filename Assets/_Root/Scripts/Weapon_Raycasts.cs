@@ -22,7 +22,7 @@ public class Weapon_Raycasts : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit)) // Shoots out a raycast that gathers information on what it hits
         {
-            Debug.Log(hit.transform.name);
+            Debug.Log(hit.transform.name); // This will show the name of the object that the raycast hits in the console
         }
     }
 }
