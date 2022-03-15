@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon_Raycasts : MonoBehaviour
@@ -24,8 +22,7 @@ public class Weapon_Raycasts : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit)) // Shoots out a raycast that gathers information on what it hits
         {
-            Debug.Log("pew");
+            Debug.Log(hit.transform.name);
         }
     }
-
 }
