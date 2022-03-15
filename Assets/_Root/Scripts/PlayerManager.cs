@@ -19,5 +19,6 @@ public class PlayerManager : MonoBehaviour
     private void FixedUpdate()
     {
         characterLocomotion.HandleAllMovement();
+        
     }
 }
