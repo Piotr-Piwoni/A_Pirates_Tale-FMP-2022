@@ -15,9 +15,16 @@ public class CharacterLocomotion : MonoBehaviour
     {
         inputManager = GetComponent<InputManager>();
         characterRB = GetComponent<Rigidbody>();
+        cameraObject = Camera.main.transform;
     }
 
-    public void HandleMovement()
+    public void HandleAllMovement()
+    {
+        HandleMovement();
+        HandleRotation();
+    }
+
+    private void HandleMovement()
     {
         moveDir = cameraObject.forward * inputManager.verticalInput;
         moveDir += cameraObject.right * inputManager.horizontalInput;
@@ -29,7 +36,7 @@ public class CharacterLocomotion : MonoBehaviour
         characterRB.velocity = movementVelocity;
     }
 
-    public void HandleRotation()
+    private void HandleRotation()
     {
         Vector3 targetDir = Vector3.zero;
 
@@ -37,6 +44,9 @@ public class CharacterLocomotion : MonoBehaviour
         targetDir += cameraObject.right * inputManager.horizontalInput;
         targetDir.Normalize();
         targetDir.y = 0;
+
+        if (targetDir == Vector3.zero)
+            targetDir = transform.forward;
 
         Quaternion targetRotation = Quaternion.LookRotation(targetDir);
         Quaternion characterRotation = Quaternion.Slerp(transform.rotation, targetRotation, roationSpeed * Time.deltaTime);
