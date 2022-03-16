@@ -135,8 +135,4 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  path: Assets/_Root/Scenes/Game.unity
-  artifactKey: Guid(87e57ba0e95a14f4db6165f017f41cb9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/_Root/Scenes/Game.unity using Guid(87e57ba0e95a14f4db6165f017f41cb9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '41b13a37fb03ca2264fb303bcce6ef77') in 0.020412 seconds 
-  Import took 0.027556 seconds .
 
