@@ -9,15 +9,15 @@ public class Weapon_Raycasts : MonoBehaviour
         cam = Camera.main; // Gets the camera that has the main camera tag
     }
 
-    private void Update()
+/*    private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
             Shoot(); // Starts the private method that is named Shoot
         }
-    }
+    }*/
 
-    private void Shoot()
+    public void Shoot()
     {
         RaycastHit hit;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit)) // Shoots out a raycast that gathers information on what it hits
