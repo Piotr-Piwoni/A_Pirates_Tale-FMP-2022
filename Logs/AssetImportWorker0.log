@@ -144,3 +144,11 @@ Received Import Request.
 Start importing Assets/_Root/Scenes/Main Game.unity using Guid(db2ebc9caeef2a9438cb0255549428bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'da5307677c11855b391faa5ad0c2fdd8') in 0.004132 seconds 
   Import took 0.008914 seconds .
 
+========================================================================
+Received Import Request.
+  Time since last request: 395.735555 seconds.
+  path: Assets/_Root/Art
+  artifactKey: Guid(32ad9220cdf8bec458ea9289f20b73cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_Root/Art using Guid(32ad9220cdf8bec458ea9289f20b73cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b88a684a465de25b42b6889f638d3b04') in 0.003707 seconds 
+  Import took 0.008898 seconds .
+
