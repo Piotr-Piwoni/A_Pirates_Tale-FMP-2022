@@ -4,11 +4,13 @@ public class PlayerManager : MonoBehaviour
 {
     InputManager inputManager;
     CharacterLocomotion characterLocomotion;
+    CameraManager cameraManager;
 
     private void Awake()
     {
         inputManager = GetComponent<InputManager>();
         characterLocomotion = GetComponent<CharacterLocomotion>();
+        cameraManager = FindObjectOfType<CameraManager>();
     }
 
     private void Update()
@@ -18,7 +20,11 @@ public class PlayerManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        characterLocomotion.HandleAllMovement();
-        
+        characterLocomotion.HandleAllMovement();    
+    }
+
+    private void LateUpdate()
+    {
+        cameraManager.HandleAllCameraMovement();
     }
 }
