@@ -1,56 +1,60 @@
 using UnityEngine;
+using CultureFMP.Manager;
 
-public class CharacterLocomotion : MonoBehaviour
+namespace CultureFMP.Movement
 {
-    InputManager inputManager;
-
-    Vector3 moveDir;
-    Transform cameraObject;
-    Rigidbody characterRB;
-
-    public float movementSpeed = 7;
-    public float roationSpeed = 15;
-
-    private void Awake()
+    public class CharacterLocomotion : MonoBehaviour
     {
-        inputManager = GetComponent<InputManager>();
-        characterRB = GetComponent<Rigidbody>();
-        cameraObject = Camera.main.transform;
-    }
+        private InputManager _inputManager;
 
-    public void HandleAllMovement()
-    {
-        HandleMovement();
-        HandleRotation();
-    }
+        private Vector3 _moveDir;
+        private Transform _cameraObject;
+        private Rigidbody _characterRb;
 
-    private void HandleMovement()
-    {
-        moveDir = cameraObject.forward * inputManager.verticalInput;
-        moveDir += cameraObject.right * inputManager.horizontalInput;
-        moveDir.Normalize();
-        moveDir.y = 0;
-        moveDir *= movementSpeed;
+        public float movementSpeed = 7;
+        public float rotationSpeed = 15;
 
-        Vector3 movementVelocity = moveDir;
-        characterRB.velocity = movementVelocity;
-    }
+        private void Awake()
+        {
+            _inputManager = GetComponent<InputManager>();
+            _characterRb = GetComponent<Rigidbody>();
+            if (Camera.main != null) _cameraObject = Camera.main.transform;
+        }
 
-    private void HandleRotation()
-    {
-        Vector3 targetDir = Vector3.zero;
+        public void HandleAllMovement()
+        {
+            HandleMovement();
+            HandleRotation();
+        }
 
-        targetDir = cameraObject.forward * inputManager.verticalInput;
-        targetDir += cameraObject.right * inputManager.horizontalInput;
-        targetDir.Normalize();
-        targetDir.y = 0;
+        private void HandleMovement()
+        {
+            _moveDir = _cameraObject.forward * _inputManager.verticalInput;
+            _moveDir += _cameraObject.right * _inputManager.horizontalInput;
+            _moveDir.Normalize();
+            _moveDir.y = 0;
+            _moveDir *= movementSpeed;
 
-        if (targetDir == Vector3.zero)
-            targetDir = transform.forward;
+            Vector3 _movementVelocity = _moveDir;
+            _characterRb.velocity = _movementVelocity;
+        }
 
-        Quaternion targetRotation = Quaternion.LookRotation(targetDir);
-        Quaternion characterRotation = Quaternion.Slerp(transform.rotation, targetRotation, roationSpeed * Time.deltaTime);
+        private void HandleRotation()
+        {
+            Vector3 _targetDir = Vector3.zero;
 
-        transform.rotation = characterRotation;
+            _targetDir = _cameraObject.forward * _inputManager.verticalInput;
+            _targetDir += _cameraObject.right * _inputManager.horizontalInput;
+            _targetDir.Normalize();
+            _targetDir.y = 0;
+
+            if (_targetDir == Vector3.zero)
+                _targetDir = transform.forward;
+
+            Quaternion _targetRotation = Quaternion.LookRotation(_targetDir);
+            Quaternion _characterRotation = Quaternion.Slerp(transform.rotation, _targetRotation, rotationSpeed * Time.deltaTime);
+
+            transform.rotation = _characterRotation;
+        }
     }
 }

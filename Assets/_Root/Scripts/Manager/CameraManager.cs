@@ -1,14 +1,17 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CultureFMP.Manager
 {
     public class CameraManager : MonoBehaviour
     {
-        private InputManager inputManager;
-        private Transform cameraTransform;
-        private Vector3 cameraFollowVelocity = Vector3.zero;
-        private Vector3 cameraVectorPosition;
-        private float defualtPosition;
+        [SerializeField] private bool hideMouseCursor;
+        
+        private InputManager _inputManager;
+        private Transform _transform;
+        private Vector3 _followVelocity = Vector3.zero;
+        private Vector3 _vectorPosition;
+        private float _defaultPosition;
 
         public LayerMask collisionLayers;
         public Transform targetTransform;
@@ -28,9 +31,11 @@ namespace CultureFMP.Manager
         private void Awake()
         {
             targetTransform = FindObjectOfType<PlayerManager>().transform;
-            inputManager = FindObjectOfType<InputManager>();
-            cameraTransform = Camera.main.transform;
-            defualtPosition = cameraTransform.localPosition.z;
+            _inputManager = FindObjectOfType<InputManager>();
+            if (Camera.main != null) _transform = Camera.main.transform;
+            _defaultPosition = _transform.localPosition.z;
+            if (hideMouseCursor)
+                Cursor.lockState = CursorLockMode.Locked;
         }
 
         public void HandleAllCameraMovement()
@@ -42,52 +47,52 @@ namespace CultureFMP.Manager
 
         private void FollowTarget()
         {
-            Vector3 targetPosition = Vector3.SmoothDamp(transform.position, targetTransform.position, ref cameraFollowVelocity, cameraFollowSpeed);
+            Vector3 _targetPosition = Vector3.SmoothDamp(transform.position, targetTransform.position, ref _followVelocity, cameraFollowSpeed);
 
-            transform.position = targetPosition;
+            transform.position = _targetPosition;
         }
 
         private void RotateCamera()
         {
-            Vector3 rotation;
-            Quaternion targetRotation;
+            Vector3 _rotation;
+            Quaternion _targetRotation;
 
-            lookAngle += (inputManager.cameraInputX * cameraLookSpeed);
-            pivotAngle += (inputManager.cameraInputY * cameraPivotSpeed);
+            lookAngle += (_inputManager.cameraInputX * cameraLookSpeed);
+            pivotAngle += (_inputManager.cameraInputY * cameraPivotSpeed);
             pivotAngle = Mathf.Clamp(pivotAngle, minimumPivotAngle, maximumPivotAngle);
 
-            rotation = Vector3.zero;
-            rotation.y = lookAngle;
-            targetRotation = Quaternion.Euler(rotation);
-            transform.rotation = targetRotation;
+            _rotation = Vector3.zero;
+            _rotation.y = lookAngle;
+            _targetRotation = Quaternion.Euler(_rotation);
+            transform.rotation = _targetRotation;
 
-            rotation = Vector3.zero;
-            rotation.x = pivotAngle;
-            targetRotation = Quaternion.Euler(rotation);
-            cameraPivot.localRotation = targetRotation;
+            _rotation = Vector3.zero;
+            _rotation.x = pivotAngle;
+            _targetRotation = Quaternion.Euler(_rotation);
+            cameraPivot.localRotation = _targetRotation;
         }
 
         private void HandleCameraCollision()
         {
-            float targetPosition = defualtPosition;
-            RaycastHit hit;
+            float _targetPosition = _defaultPosition;
+            RaycastHit _hit;
 
-            Vector3 direction = cameraTransform.position - cameraPivot.position;
-            direction.Normalize();
+            Vector3 _direction = _transform.position - cameraPivot.position;
+            _direction.Normalize();
 
-            if (Physics.SphereCast(cameraPivot.transform.position, cameraCollisionRadius, direction, out hit, Mathf.Abs(targetPosition), collisionLayers))
+            if (Physics.SphereCast(cameraPivot.transform.position, cameraCollisionRadius, _direction, out _hit, Mathf.Abs(_targetPosition), collisionLayers))
             {
-                float distance = Vector3.Distance(cameraPivot.position, hit.point);
-                targetPosition -= (distance - cameraCollisionOffset);
+                float _distance = Vector3.Distance(cameraPivot.position, _hit.point);
+                _targetPosition -= (_distance - cameraCollisionOffset);
             }
 
-            if (Mathf.Abs(targetPosition) < minimumCollisionOffset)
+            if (Mathf.Abs(_targetPosition) < minimumCollisionOffset)
             {
-                targetPosition -= minimumCollisionOffset;
+                _targetPosition -= minimumCollisionOffset;
             }
 
-            cameraVectorPosition.z = Mathf.Lerp(cameraTransform.localPosition.z, targetPosition, 0.2f);
-            cameraTransform.localPosition = cameraVectorPosition;
+            _vectorPosition.z = Mathf.Lerp(_transform.localPosition.z, _targetPosition, 0.2f);
+            _transform.localPosition = _vectorPosition;
         }
     }
 }

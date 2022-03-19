@@ -1,46 +1,49 @@
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+namespace CultureFMP.Manager
 {
-    private InputActions inputActions;
-    private float moveAmount;
-
-    public Vector2 movementInput;
-    public Vector2 cameraInput;
-    public float cameraInputX;
-    public float cameraInputY;
-    public float verticalInput;
-    public float horizontalInput;
-
-    private void OnEnable()
+    public class InputManager : MonoBehaviour
     {
-        if (inputActions == null)
-        {
-            inputActions = new InputActions();
+        private InputActions _inputActions;
+        private float _moveAmount;
 
-            inputActions.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
-            inputActions.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
+        public Vector2 movementInput;
+        public Vector2 cameraInput;
+        public float cameraInputX;
+        public float cameraInputY;
+        public float verticalInput;
+        public float horizontalInput;
+
+        private void OnEnable()
+        {
+            if (_inputActions == null)
+            {
+                _inputActions = new InputActions();
+
+                _inputActions.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
+                _inputActions.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
+            }
+
+            _inputActions.Enable();
         }
 
-        inputActions.Enable();
-    }
+        private void OnDisable()
+        {
+            _inputActions.Disable();
+        }
 
-    private void OnDisable()
-    {
-        inputActions.Disable();
-    }
+        public void HandleAllInputs()
+        {
+            HandleMovementInput();
+        }
 
-    public void HundalAllInputs()
-    {
-        HandleMovementInput();
-    }
+        private void HandleMovementInput()
+        {
+            verticalInput = movementInput.y;
+            horizontalInput = movementInput.x;
 
-    private void HandleMovementInput()
-    {
-        verticalInput = movementInput.y;
-        horizontalInput = movementInput.x;
-
-        cameraInputY = cameraInput.y;
-        cameraInputX = cameraInput.x;
+            cameraInputY = cameraInput.y;
+            cameraInputX = cameraInput.x;
+        }
     }
 }

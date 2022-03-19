@@ -1,31 +1,34 @@
-using CultureFMP.Manager;
 using UnityEngine;
+using CultureFMP.Movement;
 
-public class PlayerManager : MonoBehaviour
+namespace CultureFMP.Manager
 {
-    InputManager inputManager;
-    CharacterLocomotion characterLocomotion;
-    CameraManager cameraManager;
-
-    private void Awake()
+    public class PlayerManager : MonoBehaviour
     {
-        inputManager = GetComponent<InputManager>();
-        characterLocomotion = GetComponent<CharacterLocomotion>();
-        cameraManager = FindObjectOfType<CameraManager>();
-    }
+        private InputManager _inputManager;
+        private CharacterLocomotion _characterLocomotion;
+        private CameraManager _cameraManager;
 
-    private void Update()
-    {
-        inputManager.HundalAllInputs();
-    }
+        private void Awake()
+        {
+            _inputManager = GetComponent<InputManager>();
+            _characterLocomotion = GetComponent<CharacterLocomotion>();
+            _cameraManager = FindObjectOfType<CameraManager>();
+        }
 
-    private void FixedUpdate()
-    {
-        characterLocomotion.HandleAllMovement();    
-    }
+        private void Update()
+        {
+            _inputManager.HandleAllInputs();
+        }
 
-    private void LateUpdate()
-    {
-        cameraManager.HandleAllCameraMovement();
+        private void FixedUpdate()
+        {
+            _characterLocomotion.HandleAllMovement();    
+        }
+
+        private void LateUpdate()
+        {
+            _cameraManager.HandleAllCameraMovement();
+        }
     }
 }
