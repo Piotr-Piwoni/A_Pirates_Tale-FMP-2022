@@ -1,7 +1,7 @@
 using UnityEngine;
-using CultureFMP.Manager;
+using CultureFMP.Movement.Manager;
 
-namespace CultureFMP.Movement
+namespace CultureFMP.Movement.Movement
 {
     public class CharacterLocomotion : MonoBehaviour
     {
