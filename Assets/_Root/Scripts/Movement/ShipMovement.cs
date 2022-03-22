@@ -5,29 +5,23 @@ namespace CultureFMP.Movement
 {
     public class ShipMovement : MonoBehaviour
     {
-        public Vector3 direction;
-        public float duration;
-        public bool isContinues;
+        public float shipSpeed = 2;
+        public bool isMoving;
 
-        private Vector3 _position;
+        private Vector3 _shipPos;
 
         private void Awake()
         {
-            _position = transform.position;
+            _shipPos = transform.position;
         }
 
         private void Update()
         {
-            _position += direction;
-            //MoveSideways(direction, duration, isContinues);
+            if (isMoving)
+            {
+                _shipPos = Vector3.forward * 1000f; //* shipSpeed * Time.deltaTime
+            }
         }
 
-        // private void MoveSideways(Vector3 direction, float duration, bool isContinues)
-        // {
-        //     if (isContinues) return;
-        //     Vector3 newPosition = _position + direction;
-        //
-        //     _position = Vector3.MoveTowards(_position, newPosition, duration * Time.deltaTime);
-        // }
     }
 }
