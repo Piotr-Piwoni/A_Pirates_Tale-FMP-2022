@@ -1,7 +1,7 @@
-using CultureFMP.Movement.Input;
+using CultureFMP.Input;
 using UnityEngine;
 
-namespace CultureFMP.Movement.Manager
+namespace CultureFMP.Manager
 {
     public class InputManager : MonoBehaviour
     {

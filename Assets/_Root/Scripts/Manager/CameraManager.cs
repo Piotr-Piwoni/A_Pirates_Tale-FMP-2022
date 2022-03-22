@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace CultureFMP.Movement.Manager
+namespace CultureFMP.Manager
 {
     public class CameraManager : MonoBehaviour
     {

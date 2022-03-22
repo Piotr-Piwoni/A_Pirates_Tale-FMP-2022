@@ -1,7 +1,7 @@
 using UnityEngine;
-using CultureFMP.Movement.Movement;
+using CultureFMP.Movement;
 
-namespace CultureFMP.Movement.Manager
+namespace CultureFMP.Manager
 {
     public class PlayerManager : MonoBehaviour
     {
