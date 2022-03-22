@@ -679,10 +679,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0429b1c9a25a8dd4d90e37533ddffafb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hideMouseCursor: 0
-  collisionLayers:
-    serializedVersion: 2
-    m_Bits: 0
   targetTransform: {fileID: 866409323}
   cameraPivot: {fileID: 2018051950}
   cameraFollowSpeed: 0
@@ -690,8 +686,10 @@ MonoBehaviour:
   cameraPivotSpeed: 0.5
   minimumPivotAngle: -45
   maximumPivotAngle: 40
-  lookAngle: 0
-  pivotAngle: 0
+  hideMouseCursor: 0
+  collisionLayers:
+    serializedVersion: 2
+    m_Bits: 0
   cameraCollisionRadius: 2
   cameraCollisionOffset: 0.2
   minimumCollisionOffset: 0.2
