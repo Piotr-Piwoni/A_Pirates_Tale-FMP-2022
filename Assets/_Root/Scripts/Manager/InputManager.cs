@@ -6,10 +6,11 @@ namespace CultureFMP.Manager
     public class InputManager : MonoBehaviour
     {
         private InputActions _inputActions;
-        private float _moveAmount;
 
-        public Vector2 movementInput;
-        public Vector2 cameraInput;
+        [Header("Debuging Staff")]
+        [SerializeField] private Vector2 movementInput;
+        [SerializeField] private Vector2 cameraInput;
+
         public float cameraInputX;
         public float cameraInputY;
         public float verticalInput;
