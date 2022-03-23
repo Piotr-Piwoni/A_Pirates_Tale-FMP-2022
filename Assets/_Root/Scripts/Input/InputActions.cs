@@ -226,6 +226,45 @@ namespace CultureFMP.Input
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Player Actions"",
+            ""id"": ""2fbcf8f9-1173-4337-a5c6-92f6a14b3677"",
+            ""actions"": [
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""1c105278-8072-4284-ac4e-7ba641853356"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""630f1345-5c9c-4728-9a48-07b142d45c1b"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ba3de8a0-51b4-4ede-a60b-3cad1058d4e1"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -234,6 +273,9 @@ namespace CultureFMP.Input
             m_PlayerMovement = asset.FindActionMap("Player Movement", throwIfNotFound: true);
             m_PlayerMovement_Movement = m_PlayerMovement.FindAction("Movement", throwIfNotFound: true);
             m_PlayerMovement_Camera = m_PlayerMovement.FindAction("Camera", throwIfNotFound: true);
+            // Player Actions
+            m_PlayerActions = asset.FindActionMap("Player Actions", throwIfNotFound: true);
+            m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -330,10 +372,47 @@ namespace CultureFMP.Input
             }
         }
         public PlayerMovementActions @PlayerMovement => new PlayerMovementActions(this);
+
+        // Player Actions
+        private readonly InputActionMap m_PlayerActions;
+        private IPlayerActionsActions m_PlayerActionsActionsCallbackInterface;
+        private readonly InputAction m_PlayerActions_Jump;
+        public struct PlayerActionsActions
+        {
+            private @InputActions m_Wrapper;
+            public PlayerActionsActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
+            public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(PlayerActionsActions set) { return set.Get(); }
+            public void SetCallbacks(IPlayerActionsActions instance)
+            {
+                if (m_Wrapper.m_PlayerActionsActionsCallbackInterface != null)
+                {
+                    @Jump.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnJump;
+                    @Jump.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnJump;
+                    @Jump.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnJump;
+                }
+                m_Wrapper.m_PlayerActionsActionsCallbackInterface = instance;
+                if (instance != null)
+                {
+                    @Jump.started += instance.OnJump;
+                    @Jump.performed += instance.OnJump;
+                    @Jump.canceled += instance.OnJump;
+                }
+            }
+        }
+        public PlayerActionsActions @PlayerActions => new PlayerActionsActions(this);
         public interface IPlayerMovementActions
         {
             void OnMovement(InputAction.CallbackContext context);
             void OnCamera(InputAction.CallbackContext context);
+        }
+        public interface IPlayerActionsActions
+        {
+            void OnJump(InputAction.CallbackContext context);
         }
     }
 }
