@@ -1,5 +1,6 @@
 using UnityEngine;
 using CultureFMP.Manager;
+using System;
 
 namespace CultureFMP.Movement
 {
@@ -13,6 +14,10 @@ namespace CultureFMP.Movement
 
         public float movementSpeed = 7;
         public float rotationSpeed = 15;
+        public bool isGrounded;
+        public bool isJumping;
+        public float gravityIntensity = 15;
+        public float jumpHeight= 3;
 
         private void Awake()
         {
@@ -41,6 +46,9 @@ namespace CultureFMP.Movement
 
         private void HandleRotation()
         {
+            if (isJumping)
+                return;
+
             Vector3 _targetDir = Vector3.zero;
 
             _targetDir = _cameraObject.forward * _inputManager.verticalInput;
@@ -55,6 +63,17 @@ namespace CultureFMP.Movement
             Quaternion _characterRotation = Quaternion.Slerp(transform.rotation, _targetRotation, rotationSpeed * Time.deltaTime);
 
             transform.rotation = _characterRotation;
+        }
+
+        internal void HandleJumping()
+        {
+            if (isGrounded)
+            {
+                float jumpingVelocity = Mathf.Sqrt(-2 * gravityIntensity * jumpHeight);
+                Vector3 playerVelocity = _moveDir;
+                playerVelocity.y = jumpingVelocity;
+                _characterRb.velocity = playerVelocity;
+            }
         }
     }
 }
