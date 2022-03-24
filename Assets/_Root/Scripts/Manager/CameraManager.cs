@@ -27,7 +27,7 @@ namespace CultureFMP.Manager
         public float minimumPivotAngle = -35;
         public float maximumPivotAngle = 35;
 
-        [Space(5)]
+        [Space(10)]
         [SerializeField] private bool hideMouseCursor;
 
         [Header("Camera Collision")]
