@@ -6,6 +6,7 @@ namespace CultureFMP.Movement
 {
     public class CharacterLocomotion : MonoBehaviour
     {
+        #region
         private InputManager _inputManager;
 
         private Vector3 _moveDir;
@@ -24,6 +25,7 @@ namespace CultureFMP.Movement
         public float rayCastHeightOffset;
         public float rayCastRadius = 0.2f;
         public LayerMask groundLayer;
+        #endregion
 
         private void Awake()
         {
@@ -78,13 +80,20 @@ namespace CultureFMP.Movement
             Vector3 rayCastOrigin = transform.position;
             rayCastOrigin.y += rayCastHeightOffset;
 
-            if (!isGrounded && !isJumping)
+            if (!isGrounded && isJumping)
             {
                 inAirTimer += Time.deltaTime;
                 _characterRb.AddForce(transform.forward * leapingVelocity);
                 _characterRb.AddForce(-Vector3.up * fallingVelocity * inAirTimer);
+            }
 
-                isGrounded = Physics.SphereCast(rayCastOrigin, rayCastRadius, -Vector3.up, out hit, groundLayer);
+            if (Physics.SphereCast(rayCastOrigin, rayCastRadius, -Vector3.up, out hit, groundLayer))
+            { 
+                isGrounded = true;
+                inAirTimer = 0f;
+            } else
+            {
+                isGrounded = false;
             }
         }
 
@@ -92,13 +101,10 @@ namespace CultureFMP.Movement
         {
             if (isGrounded)
             {
-
-                _characterRb.AddForce(new Vector3(0f, 1000f, 0f));
-
-                /*float jumpingVelocity = Mathf.Sqrt(2 * gravityIntensity * jumpHeight);
+                float jumpingVelocity = Mathf.Sqrt(2 * gravityIntensity * jumpHeight);
                 Vector3 playerVelocity = _moveDir;
                 playerVelocity.y = jumpingVelocity;
-                _characterRb.velocity = playerVelocity;*/
+                _characterRb.AddForce(playerVelocity);
             }
         }
     }
