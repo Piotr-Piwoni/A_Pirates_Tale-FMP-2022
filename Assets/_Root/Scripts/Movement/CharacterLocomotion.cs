@@ -50,7 +50,7 @@ namespace CultureFMP.Movement
             _moveDir *= movementSpeed;
 
             Vector3 _movementVelocity = _moveDir;
-            _characterRb.AddForce(_movementVelocity, ForceMode.Acceleration);
+            _characterRb.AddForce(_movementVelocity, ForceMode.Force);
         }
 
         private void HandleRotation()
