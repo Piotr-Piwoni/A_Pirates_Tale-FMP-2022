@@ -22,6 +22,7 @@ namespace CultureFMP.Movement
         public float leapingVelocity;
         public float fallingVelocity;
         public float rayCastHeightOffset;
+        public float rayCastRadius = 0.2f;
         public LayerMask groundLayer;
 
         private void Awake()
@@ -47,7 +48,7 @@ namespace CultureFMP.Movement
             _moveDir *= movementSpeed;
 
             Vector3 _movementVelocity = _moveDir;
-            _characterRb.velocity = _movementVelocity;
+            _characterRb.AddForce(_movementVelocity, ForceMode.Acceleration);
         }
 
         private void HandleRotation()
@@ -82,23 +83,22 @@ namespace CultureFMP.Movement
                 inAirTimer += Time.deltaTime;
                 _characterRb.AddForce(transform.forward * leapingVelocity);
                 _characterRb.AddForce(-Vector3.up * fallingVelocity * inAirTimer);
-            }
 
-            if (Physics.SphereCast(rayCastOrigin, 0.2f, -Vector3.up, out hit, groundLayer))
-            {
-                inAirTimer = 0;
-                isGrounded = true;
-            } isGrounded = false;
+                isGrounded = Physics.SphereCast(rayCastOrigin, rayCastRadius, -Vector3.up, out hit, groundLayer);
+            }
         }
 
-        internal void HandleJumping()
+        public void HandleJumping()
         {
             if (isGrounded)
             {
-                float jumpingVelocity = Mathf.Sqrt(-2 * gravityIntensity * jumpHeight);
+
+                _characterRb.AddForce(new Vector3(0f, 1000f, 0f));
+
+                /*float jumpingVelocity = Mathf.Sqrt(2 * gravityIntensity * jumpHeight);
                 Vector3 playerVelocity = _moveDir;
                 playerVelocity.y = jumpingVelocity;
-                _characterRb.velocity = playerVelocity;
+                _characterRb.velocity = playerVelocity;*/
             }
         }
     }

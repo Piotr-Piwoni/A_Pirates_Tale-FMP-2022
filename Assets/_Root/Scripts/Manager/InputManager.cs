@@ -63,8 +63,8 @@ namespace CultureFMP.Manager
         {
             if (jumpInput)
             {
-                jumpInput = false;
                 _characterLocomotion.HandleJumping();
+                jumpInput = false;
             }
         }
     }
