@@ -18,6 +18,11 @@ namespace CultureFMP.Movement
         public bool isJumping;
         public float gravityIntensity = 15;
         public float jumpHeight= 3;
+        public float inAirTimer;
+        public float leapingVelocity;
+        public float fallingVelocity;
+        public float rayCastHeightOffset;
+        public LayerMask groundLayer;
 
         private void Awake()
         {
@@ -28,6 +33,7 @@ namespace CultureFMP.Movement
 
         public void HandleAllMovement()
         {
+            HandleFallingAndLanding();
             HandleMovement();
             HandleRotation();
         }
@@ -63,6 +69,26 @@ namespace CultureFMP.Movement
             Quaternion _characterRotation = Quaternion.Slerp(transform.rotation, _targetRotation, rotationSpeed * Time.deltaTime);
 
             transform.rotation = _characterRotation;
+        }
+
+        private void HandleFallingAndLanding()
+        {
+            RaycastHit hit;
+            Vector3 rayCastOrigin = transform.position;
+            rayCastOrigin.y += rayCastHeightOffset;
+
+            if (!isGrounded && !isJumping)
+            {
+                inAirTimer += Time.deltaTime;
+                _characterRb.AddForce(transform.forward * leapingVelocity);
+                _characterRb.AddForce(-Vector3.up * fallingVelocity * inAirTimer);
+            }
+
+            if (Physics.SphereCast(rayCastOrigin, 0.2f, -Vector3.up, out hit, groundLayer))
+            {
+                inAirTimer = 0;
+                isGrounded = true;
+            } isGrounded = false;
         }
 
         internal void HandleJumping()
