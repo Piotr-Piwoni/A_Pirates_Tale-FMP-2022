@@ -4,28 +4,38 @@ namespace CultureFMP.Manager
 {
     public class CameraManager : MonoBehaviour
     {
-        [SerializeField] private bool hideMouseCursor;
-        
+        #region
         private InputManager _inputManager;
         private Transform _transform;
         private Vector3 _followVelocity = Vector3.zero;
         private Vector3 _vectorPosition;
         private float _defaultPosition;
+        private float _lookAngle;
+        private float _pivotAngle;
 
-        public LayerMask collisionLayers;
+        [Header("Object Refrancecs")]
         public Transform targetTransform;
         public Transform cameraPivot;
 
+        [Header("Camera Settings")]
         public float cameraFollowSpeed = 0.2f;
+        [Tooltip("Controlls the Right and Left look speed.")]
         public float cameraLookSpeed = 2;
+        [Tooltip("Controlls the Up and Down look speed.")]
         public float cameraPivotSpeed = 2;
         public float minimumPivotAngle = -35;
         public float maximumPivotAngle = 35;
-        public float lookAngle;
-        public float pivotAngle;
+
+        [Space(5)]
+        [SerializeField] private bool hideMouseCursor;
+
+        [Header("Camera Collision")]
+        public LayerMask collisionLayers;
         public float cameraCollisionRadius = 2;
         public float cameraCollisionOffset = 0.2f;
+        [Tooltip("How close it need to be to the wall to offset.")]
         public float minimumCollisionOffset = 0.2f;
+        #endregion
 
         private void Awake()
         {
@@ -56,17 +66,17 @@ namespace CultureFMP.Manager
             Vector3 _rotation;
             Quaternion _targetRotation;
 
-            lookAngle += (_inputManager.cameraInputX * cameraLookSpeed);
-            pivotAngle += (_inputManager.cameraInputY * cameraPivotSpeed);
-            pivotAngle = Mathf.Clamp(pivotAngle, minimumPivotAngle, maximumPivotAngle);
+            _lookAngle += (_inputManager.cameraInputX * cameraLookSpeed);
+           _pivotAngle += (_inputManager.cameraInputY * cameraPivotSpeed);
+            _pivotAngle = Mathf.Clamp(_pivotAngle, minimumPivotAngle, maximumPivotAngle);
 
             _rotation = Vector3.zero;
-            _rotation.y = lookAngle;
+            _rotation.y = _lookAngle;
             _targetRotation = Quaternion.Euler(_rotation);
             transform.rotation = _targetRotation;
 
             _rotation = Vector3.zero;
-            _rotation.x = pivotAngle;
+            _rotation.x = _pivotAngle;
             _targetRotation = Quaternion.Euler(_rotation);
             cameraPivot.localRotation = _targetRotation;
         }
