@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace CultureFMP.Input
+namespace CultureFMP.InputA
 {
     public partial class @InputActions : IInputActionCollection2, IDisposable
     {

@@ -1,4 +1,4 @@
-using CultureFMP.Input;
+using CultureFMP.InputA;
 using UnityEngine;
 
 namespace CultureFMP.Manager
