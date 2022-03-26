@@ -52,7 +52,7 @@ namespace CultureFMP.Movement
             _moveDir *= movementSpeed;
 
             Vector3 _movementVelocity = _moveDir;
-            _characterRb.velocity = _movementVelocity;
+            _characterRb.velocity = new Vector3(_movementVelocity.x, _characterRb.velocity.y, _movementVelocity.z);
         }
 
         private void HandleRotation()
