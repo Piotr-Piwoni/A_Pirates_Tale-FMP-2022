@@ -1,7 +1,5 @@
 using UnityEngine;
 using CultureFMP.Manager;
-using System;
-using UnityEngine.Serialization;
 
 namespace CultureFMP.Movement
 {
@@ -9,11 +7,10 @@ namespace CultureFMP.Movement
     {
         #region Variables
         private InputManager _inputManager;
-        private Vector3 _moveDir;
-        private Transform _cameraObject;
         private Rigidbody _characterRb;
-
-        [SerializeField] private Transform groundChecker;
+        private Transform _cameraObject;
+        private Transform _groundChecker;
+        private Vector3 _moveDir;
 
         public float movementSpeed = 7;
         public float rotationSpeed = 15;
@@ -34,6 +31,7 @@ namespace CultureFMP.Movement
             _inputManager = GetComponent<InputManager>();
             _characterRb = GetComponent<Rigidbody>();
             if (Camera.main != null) _cameraObject = Camera.main.transform;
+            _groundChecker = transform.Find("Ground Checker");
         }
 
         public void HandleAllMovement()
@@ -89,7 +87,7 @@ namespace CultureFMP.Movement
                 _characterRb.AddForce(-Vector3.up * fallingVelocity * inAirTimer);
             }
 
-            if (Physics.SphereCast(groundChecker.position, rayCastRadius, -Vector3.up, out _hit, groundLayer))
+            if (Physics.SphereCast(_groundChecker.position, rayCastRadius, -Vector3.up, out _hit, groundLayer))
             { 
                 inAirTimer = 0f;
                 isGrounded = true;
