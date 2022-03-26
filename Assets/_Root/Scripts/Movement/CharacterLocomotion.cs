@@ -1,17 +1,19 @@
 using UnityEngine;
 using CultureFMP.Manager;
 using System;
+using UnityEngine.Serialization;
 
 namespace CultureFMP.Movement
 {
     public class CharacterLocomotion : MonoBehaviour
     {
-        #region
+        #region Variables
         private InputManager _inputManager;
-
         private Vector3 _moveDir;
         private Transform _cameraObject;
         private Rigidbody _characterRb;
+
+        [SerializeField] private Transform groundChecker;
 
         public float movementSpeed = 7;
         public float rotationSpeed = 15;
@@ -50,7 +52,7 @@ namespace CultureFMP.Movement
             _moveDir *= movementSpeed;
 
             Vector3 _movementVelocity = _moveDir;
-            _characterRb.AddForce(_movementVelocity, ForceMode.Force);
+            _characterRb.velocity = _movementVelocity;
         }
 
         private void HandleRotation()
@@ -76,21 +78,21 @@ namespace CultureFMP.Movement
 
         private void HandleFallingAndLanding()
         {
-            RaycastHit hit;
-            Vector3 rayCastOrigin = transform.position;
-            rayCastOrigin.y += rayCastHeightOffset;
+            RaycastHit _hit;
+            Vector3 _rayCastOrigin = transform.position;
+            _rayCastOrigin.y += rayCastHeightOffset;
 
-            if (!isGrounded && isJumping)
+            if (!isGrounded && !isJumping)
             {
                 inAirTimer += Time.deltaTime;
                 _characterRb.AddForce(transform.forward * leapingVelocity);
                 _characterRb.AddForce(-Vector3.up * fallingVelocity * inAirTimer);
             }
 
-            if (Physics.SphereCast(rayCastOrigin, rayCastRadius, -Vector3.up, out hit, groundLayer))
+            if (Physics.SphereCast(groundChecker.position, rayCastRadius, -Vector3.up, out _hit, groundLayer))
             { 
-                isGrounded = true;
                 inAirTimer = 0f;
+                isGrounded = true;
             } else
             {
                 isGrounded = false;
@@ -101,10 +103,10 @@ namespace CultureFMP.Movement
         {
             if (isGrounded)
             {
-                float jumpingVelocity = Mathf.Sqrt(2 * gravityIntensity * jumpHeight);
-                Vector3 playerVelocity = _moveDir;
-                playerVelocity.y = jumpingVelocity;
-                _characterRb.AddForce(playerVelocity);
+                float _jumpingVelocity = Mathf.Sqrt(2 * gravityIntensity * jumpHeight);
+                Vector3 _playerVelocity = _moveDir;
+                _playerVelocity.y = _jumpingVelocity;
+                _characterRb.velocity = _playerVelocity;
             }
         }
     }
