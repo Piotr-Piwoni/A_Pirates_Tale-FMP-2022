@@ -9,7 +9,7 @@ namespace CultureFMP.Manager
         private InputActions _inputActions;
         private CharacterLocomotion _characterLocomotion;
 
-        [Header("Debuging Staff")]
+        [Header("Debugging Stats")]
         [SerializeField] private Vector2 movementInput;
         [SerializeField] private Vector2 cameraInput;
         [SerializeField] private bool jumpInput;

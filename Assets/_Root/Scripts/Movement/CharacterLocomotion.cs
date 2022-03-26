@@ -12,15 +12,20 @@ namespace CultureFMP.Movement
         private Transform _groundChecker;
         private Vector3 _moveDir;
 
-        public float movementSpeed = 7;
-        public float rotationSpeed = 15;
-        public bool isGrounded;
+        [Header("Movement Settings")]
+        public float movementSpeed = 15;
+        public float rotationSpeed = 7;
+        [Header("Movement Flags")]
+        public bool isGrounded = true;
         public bool isJumping;
-        public float gravityIntensity = 15;
-        public float jumpHeight= 3;
+        [Header("Jump Settings")]
+        public float gravityIntensity = 20;
+        public float jumpHeight= 9;
+        [HideInInspector]
         public float inAirTimer;
-        public float leapingVelocity;
-        public float fallingVelocity;
+        public float leapingVelocity = 20;
+        public float fallingVelocity = 500;
+        [Header("Ground Checker Settings")]
         public float rayCastHeightOffset;
         public float rayCastRadius = 0.2f;
         public LayerMask groundLayer;
@@ -37,12 +42,18 @@ namespace CultureFMP.Movement
         public void HandleAllMovement()
         {
             HandleFallingAndLanding();
+            
+            if (isJumping)
+                return;
             HandleMovement();
             HandleRotation();
         }
 
         private void HandleMovement()
         {
+            if (isJumping)
+                return;
+            
             _moveDir = _cameraObject.forward * _inputManager.verticalInput;
             _moveDir += _cameraObject.right * _inputManager.horizontalInput;
             _moveDir.Normalize();
