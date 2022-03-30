@@ -1,4 +1,4 @@
-using CultureFMP.Input;
+using CultureFMP.InputA;
 using CultureFMP.Movement;
 using UnityEngine;
 

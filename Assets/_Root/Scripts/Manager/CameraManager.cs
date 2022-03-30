@@ -68,7 +68,7 @@ namespace CultureFMP.Manager
             Quaternion _targetRotation;
 
             _lookAngle += (_inputManager.cameraInputX * cameraLookSpeed);
-           _pivotAngle += (_inputManager.cameraInputY * cameraPivotSpeed);
+            _pivotAngle += (_inputManager.cameraInputY * cameraPivotSpeed);
             _pivotAngle = Mathf.Clamp(_pivotAngle, minimumPivotAngle, maximumPivotAngle);
 
             _rotation = Vector3.zero;
