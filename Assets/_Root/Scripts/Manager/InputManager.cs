@@ -1,4 +1,5 @@
 using CultureFMP.InputA;
+using CultureFMP.Movement;
 using UnityEngine;
 
 namespace CultureFMP.Manager
@@ -6,15 +7,22 @@ namespace CultureFMP.Manager
     public class InputManager : MonoBehaviour
     {
         private InputActions _inputActions;
+        private CharacterLocomotion _characterLocomotion;
 
-        [Header("Debuging Staff")]
+        [Header("Debugging Stats")]
         [SerializeField] private Vector2 movementInput;
         [SerializeField] private Vector2 cameraInput;
+        [SerializeField] private bool jumpInput;
 
         public float cameraInputX;
         public float cameraInputY;
         public float verticalInput;
         public float horizontalInput;
+
+        private void Awake()
+        {
+            _characterLocomotion = GetComponent<CharacterLocomotion>();    
+        }
 
         private void OnEnable()
         {
@@ -24,6 +32,8 @@ namespace CultureFMP.Manager
 
                 _inputActions.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
                 _inputActions.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
+
+                _inputActions.PlayerActions.Jump.performed += i => jumpInput = true;
             }
 
             _inputActions.Enable();
@@ -37,6 +47,7 @@ namespace CultureFMP.Manager
         public void HandleAllInputs()
         {
             HandleMovementInput();
+            HandleJumpInput();
         }
 
         private void HandleMovementInput()
@@ -46,6 +57,15 @@ namespace CultureFMP.Manager
 
             cameraInputY = cameraInput.y;
             cameraInputX = cameraInput.x;
+        }
+
+        private void HandleJumpInput()
+        {
+            if (jumpInput)
+            {
+                _characterLocomotion.HandleJumping();
+                jumpInput = false;
+            }
         }
     }
 }

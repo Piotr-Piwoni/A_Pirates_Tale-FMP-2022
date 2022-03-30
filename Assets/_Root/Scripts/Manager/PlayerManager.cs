@@ -3,6 +3,7 @@ using CultureFMP.Movement;
 
 namespace CultureFMP.Manager
 {
+    [RequireComponent(typeof(InputManager), typeof(CharacterLocomotion))]
     public class PlayerManager : MonoBehaviour
     {
         private InputManager _inputManager;

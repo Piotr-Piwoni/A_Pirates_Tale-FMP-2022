@@ -5,7 +5,7 @@ namespace CultureFMP.Manager
 {
     public class CameraManager : MonoBehaviour
     {
-        #region
+        #region Veriables
         private InputManager _inputManager;
         private Transform _transform;
         private Vector3 _followVelocity = Vector3.zero;
@@ -14,20 +14,20 @@ namespace CultureFMP.Manager
         private float _lookAngle;
         private float _pivotAngle;
 
-        [Header("Object Refrancecs")]
+        [Header("Object References")]
         public Transform targetTransform;
         public Transform cameraPivot;
 
         [Header("Camera Settings")]
         public float cameraFollowSpeed = 0.2f;
-        [Tooltip("Controlls the Right and Left look speed.")]
+        [Tooltip("Controls the Right and Left look speed.")]
         public float cameraLookSpeed = 2;
-        [Tooltip("Controlls the Up and Down look speed.")]
+        [Tooltip("Controls the Up and Down look speed.")]
         public float cameraPivotSpeed = 2;
         public float minimumPivotAngle = -35;
         public float maximumPivotAngle = 35;
 
-        [Space(5)]
+        [Space(10)]
         [SerializeField] private bool hideMouseCursor;
 
         [Header("Camera Collision")]
