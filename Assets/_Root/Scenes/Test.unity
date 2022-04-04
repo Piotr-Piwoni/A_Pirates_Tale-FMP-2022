@@ -757,6 +757,7 @@ GameObject:
   - component: {fileID: 866409318}
   - component: {fileID: 866409325}
   - component: {fileID: 866409324}
+  - component: {fileID: 866409326}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -894,6 +895,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 1
   ammoCap: 10
+--- !u!95 &866409326
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866409317}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: add74dbdc4b99974d9f1d25f9022efdc, type: 3}
+  m_Controller: {fileID: 9100000, guid: b10829ff71c8da34e94d884762308d42, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform
+    'mixamorig:LeftHandIndex1'\n\tTransform 'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform
+    'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftLeg'\n\tTransform 'mixamorig:LeftShoulder'\n\tTransform
+    'mixamorig:RightFoot'\n\tTransform 'mixamorig:Head'\n\tand more ...\n\tFrom animation
+    clip 'Walking'"
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &955066055 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f8ec0f05213b4044db1f456cdc1b53f7, type: 3}
