@@ -264,6 +264,17 @@ namespace CultureFMP.InputA
                 },
                 {
                     ""name"": """",
+                    ""id"": ""1602832a-e18b-44de-aee5-f72d0d41eff7"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""b49ff1e5-4bb6-4b6a-9c05-e8fe3d089f9d"",
                     ""path"": ""<Gamepad>/leftStickPress"",
                     ""interactions"": """",
