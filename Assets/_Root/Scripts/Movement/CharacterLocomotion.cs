@@ -1,5 +1,6 @@
 using UnityEngine;
 using CultureFMP.Manager;
+using UnityEngine.Serialization;
 
 namespace CultureFMP.Movement
 {
@@ -12,10 +13,13 @@ namespace CultureFMP.Movement
         private Transform _groundChecker;
         private Vector3 _moveDir;
 
-        [Header("Movement Settings")]
-        public float movementSpeed = 15;
+        [Header("Movement Speeds")]
+        public float walkingSpeed = 15;
+        public float runningSpeed = 22;
+        public float sprintingSpeed = 28;
         public float rotationSpeed = 7;
         [Header("Movement Flags")]
+        public bool isSprinting;
         public bool isGrounded = true;
         public bool isJumping;
         [Header("Jump Settings")]
@@ -58,7 +62,19 @@ namespace CultureFMP.Movement
             _moveDir += _cameraObject.right * _inputManager.horizontalInput;
             _moveDir.Normalize();
             _moveDir.y = 0;
-            _moveDir *= movementSpeed;
+            if (isSprinting)
+            {
+                _moveDir *= sprintingSpeed;
+            } else
+            {
+                if (_inputManager.moveAmount >= 0.55f)
+                {
+                    _moveDir *= runningSpeed;
+                } else
+                {
+                    _moveDir *= walkingSpeed;
+                }
+            }
 
             Vector3 _movementVelocity = _moveDir;
             _characterRb.velocity = new Vector3(_movementVelocity.x, _characterRb.velocity.y, _movementVelocity.z);

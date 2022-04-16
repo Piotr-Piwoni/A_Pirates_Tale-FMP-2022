@@ -16,7 +16,7 @@ namespace CultureFMP.Manager
             _vertical = Animator.StringToHash("Vertical");
         }
 
-        public void UpdateAnimatorValues(float _horizontalMovement, float _verticalMovement)
+        public void UpdateAnimatorValues(float _horizontalMovement, float _verticalMovement, bool _isSprinting)
         {
             float _snappedHorizontal;
             float _snappedVertical;
@@ -61,6 +61,12 @@ namespace CultureFMP.Manager
                 }
 
             #endregion
+
+            if (_isSprinting)
+            {
+                _snappedHorizontal = _horizontalMovement;
+                _snappedVertical = 2;
+            }
             
             _animator.SetFloat(_horizontal, _snappedHorizontal, 0.1f, Time.deltaTime);
             _animator.SetFloat(_vertical, _snappedVertical, 0.1f, Time.deltaTime);

@@ -13,13 +13,14 @@ namespace CultureFMP.Manager
         [Header("Debugging Stats")]
         [SerializeField] private Vector2 movementInput;
         [SerializeField] private Vector2 cameraInput;
-        [SerializeField] private float moveAmount;
+        [SerializeField] private bool sprintInput;
         [SerializeField] private bool jumpInput;
 
+        public float horizontalInput;
+        public float verticalInput;
+        public float moveAmount;
         public float cameraInputX;
         public float cameraInputY;
-        public float verticalInput;
-        public float horizontalInput;
 
         private void Awake()
         {
@@ -36,6 +37,8 @@ namespace CultureFMP.Manager
                 _inputActions.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
                 _inputActions.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
 
+                _inputActions.PlayerActions.Sprint.performed += i => sprintInput = true;
+                _inputActions.PlayerActions.Sprint.canceled += i => sprintInput = false;
                 _inputActions.PlayerActions.Jump.performed += i => jumpInput = true;
             }
 
@@ -50,21 +53,33 @@ namespace CultureFMP.Manager
         public void HandleAllInputs()
         {
             HandleMovementInput();
+            HandleSprintingInput();
             HandleJumpInput();
         }
 
         private void HandleMovementInput()
         {
-            verticalInput = movementInput.y;
             horizontalInput = movementInput.x;
+            verticalInput = movementInput.y;
 
             moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
-            _animatorManager.UpdateAnimatorValues(0,moveAmount);
+            _animatorManager.UpdateAnimatorValues(0,moveAmount, _characterLocomotion.isSprinting);
             
-            cameraInputY = cameraInput.y;
             cameraInputX = cameraInput.x;
+            cameraInputY = cameraInput.y;
         }
 
+        private void HandleSprintingInput()
+        {
+            if (sprintInput && moveAmount > 0.5f)
+            {
+                _characterLocomotion.isSprinting = true;
+            } else
+            {
+                _characterLocomotion.isSprinting = false;
+            }
+        }
+        
         private void HandleJumpInput()
         {
             if (jumpInput)
