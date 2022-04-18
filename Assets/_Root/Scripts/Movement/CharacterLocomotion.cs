@@ -51,7 +51,7 @@ namespace CultureFMP.Movement
         {
             HandleFallingAndLanding();
             
-            if (isJumping && _playerManager.isInteracting)
+            if (_playerManager.isInteracting)
                 return;
             HandleMovement();
             HandleRotation();
@@ -142,6 +142,8 @@ namespace CultureFMP.Movement
         {
             if (isGrounded)
             {
+                _animatorManager.animator.SetBool("isJumping", true);
+                _animatorManager.PlayTargetAnimation("Jumping", false);
                 float _jumpingVelocity = Mathf.Sqrt(2 * gravityIntensity * jumpHeight);
                 Vector3 _playerVelocity = _moveDir;
                 _playerVelocity.y = _jumpingVelocity;

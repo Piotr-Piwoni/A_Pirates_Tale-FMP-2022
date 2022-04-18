@@ -36,6 +36,8 @@ namespace CultureFMP.Manager
             _cameraManager.HandleAllCameraMovement();
 
             isInteracting = _animator.GetBool("isInteracting");
+            _characterLocomotion.isJumping = _animator.GetBool("isJumping");
+            _animator.SetBool("isGrounded", _characterLocomotion.isGrounded);
         }
     }
 }

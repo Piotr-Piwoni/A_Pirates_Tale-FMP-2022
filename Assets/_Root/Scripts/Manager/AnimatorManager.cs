@@ -1,25 +1,28 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CultureFMP.Manager
 {
     public class AnimatorManager : MonoBehaviour
     {
-        private Animator _animator;
+        [HideInInspector]
+        public Animator animator;
+        
         private int _horizontal;
         private int _vertical;
 
         private void Awake()
         {
-            _animator = GetComponent<Animator>();
+            animator = GetComponent<Animator>();
             _horizontal = Animator.StringToHash("Horizontal");
             _vertical = Animator.StringToHash("Vertical");
         }
 
         public void PlayTargetAnimation(string _targetAnimation, bool _isInteracting)
         {
-            _animator.SetBool("isInteracting", _isInteracting);
-            _animator.CrossFade(_targetAnimation, 0.2f);
+            animator.SetBool("isInteracting", _isInteracting);
+            animator.CrossFade(_targetAnimation, 0.2f);
         }
 
         public void UpdateAnimatorValues(float _horizontalMovement, float _verticalMovement, bool _isSprinting)
@@ -74,8 +77,8 @@ namespace CultureFMP.Manager
                 _snappedVertical = 2;
             }
             
-            _animator.SetFloat(_horizontal, _snappedHorizontal, 0.1f, Time.deltaTime);
-            _animator.SetFloat(_vertical, _snappedVertical, 0.1f, Time.deltaTime);
+            animator.SetFloat(_horizontal, _snappedHorizontal, 0.1f, Time.deltaTime);
+            animator.SetFloat(_vertical, _snappedVertical, 0.1f, Time.deltaTime);
         }
     }
 }
