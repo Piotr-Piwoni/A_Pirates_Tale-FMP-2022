@@ -16,6 +16,12 @@ namespace CultureFMP.Manager
             _vertical = Animator.StringToHash("Vertical");
         }
 
+        public void PlayTargetAnimation(string _targetAnimation, bool _isInteracting)
+        {
+            _animator.SetBool("isInteracting", _isInteracting);
+            _animator.CrossFade(_targetAnimation, 0.2f);
+        }
+
         public void UpdateAnimatorValues(float _horizontalMovement, float _verticalMovement, bool _isSprinting)
         {
             float _snappedHorizontal;

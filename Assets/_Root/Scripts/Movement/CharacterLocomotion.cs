@@ -8,6 +8,8 @@ namespace CultureFMP.Movement
     {
         #region Variables
         private InputManager _inputManager;
+        private PlayerManager _playerManager;
+        private AnimatorManager _animatorManager;
         private Rigidbody _characterRb;
         private Transform _cameraObject;
         private Transform _groundChecker;
@@ -38,6 +40,8 @@ namespace CultureFMP.Movement
         private void Awake()
         {
             _inputManager = GetComponent<InputManager>();
+            _playerManager = GetComponent<PlayerManager>();
+            _animatorManager = GetComponent<AnimatorManager>();
             _characterRb = GetComponent<Rigidbody>();
             if (Camera.main != null) _cameraObject = Camera.main.transform;
             _groundChecker = transform.Find("Ground Checker");
@@ -47,7 +51,7 @@ namespace CultureFMP.Movement
         {
             HandleFallingAndLanding();
             
-            if (isJumping)
+            if (isJumping && _playerManager.isInteracting)
                 return;
             HandleMovement();
             HandleRotation();
@@ -109,13 +113,23 @@ namespace CultureFMP.Movement
 
             if (!isGrounded && !isJumping)
             {
+                if (!_playerManager.isInteracting)
+                {
+                    _animatorManager.PlayTargetAnimation("Falling Idle", true);
+                }
+                
                 inAirTimer += Time.deltaTime;
                 _characterRb.AddForce(transform.forward * leapingVelocity);
                 _characterRb.AddForce(-Vector3.up * fallingVelocity * inAirTimer);
             }
 
             if (Physics.SphereCast(_groundChecker.position, rayCastRadius, -Vector3.up, out _hit, groundLayer))
-            { 
+            {
+                if (!isGrounded && !_playerManager.isInteracting)
+                {
+                    _animatorManager.PlayTargetAnimation("Falling To Landing", true);
+                }
+                
                 inAirTimer = 0f;
                 isGrounded = true;
             } else
