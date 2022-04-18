@@ -1,5 +1,6 @@
 using UnityEngine;
 using CultureFMP.Manager;
+using UnityEngine.Serialization;
 
 namespace CultureFMP.Movement
 {
@@ -7,15 +8,20 @@ namespace CultureFMP.Movement
     {
         #region Variables
         private InputManager _inputManager;
+        private PlayerManager _playerManager;
+        private AnimatorManager _animatorManager;
         private Rigidbody _characterRb;
         private Transform _cameraObject;
         private Transform _groundChecker;
         private Vector3 _moveDir;
 
-        [Header("Movement Settings")]
-        public float movementSpeed = 15;
+        [Header("Movement Speeds")]
+        public float walkingSpeed = 15;
+        public float runningSpeed = 22;
+        public float sprintingSpeed = 28;
         public float rotationSpeed = 7;
         [Header("Movement Flags")]
+        public bool isSprinting;
         public bool isGrounded = true;
         public bool isJumping;
         [Header("Jump Settings")]
@@ -34,6 +40,8 @@ namespace CultureFMP.Movement
         private void Awake()
         {
             _inputManager = GetComponent<InputManager>();
+            _playerManager = GetComponent<PlayerManager>();
+            _animatorManager = GetComponent<AnimatorManager>();
             _characterRb = GetComponent<Rigidbody>();
             if (Camera.main != null) _cameraObject = Camera.main.transform;
             _groundChecker = transform.Find("Ground Checker");
@@ -43,7 +51,7 @@ namespace CultureFMP.Movement
         {
             HandleFallingAndLanding();
             
-            if (isJumping)
+            if (_playerManager.isInteracting)
                 return;
             HandleMovement();
             HandleRotation();
@@ -58,7 +66,19 @@ namespace CultureFMP.Movement
             _moveDir += _cameraObject.right * _inputManager.horizontalInput;
             _moveDir.Normalize();
             _moveDir.y = 0;
-            _moveDir *= movementSpeed;
+            if (isSprinting)
+            {
+                _moveDir *= sprintingSpeed;
+            } else
+            {
+                if (_inputManager.moveAmount >= 0.55f)
+                {
+                    _moveDir *= runningSpeed;
+                } else
+                {
+                    _moveDir *= walkingSpeed;
+                }
+            }
 
             Vector3 _movementVelocity = _moveDir;
             _characterRb.velocity = new Vector3(_movementVelocity.x, _characterRb.velocity.y, _movementVelocity.z);
@@ -93,13 +113,23 @@ namespace CultureFMP.Movement
 
             if (!isGrounded && !isJumping)
             {
+                if (!_playerManager.isInteracting)
+                {
+                    _animatorManager.PlayTargetAnimation("Falling Idle", true);
+                }
+                
                 inAirTimer += Time.deltaTime;
                 _characterRb.AddForce(transform.forward * leapingVelocity);
                 _characterRb.AddForce(-Vector3.up * fallingVelocity * inAirTimer);
             }
 
             if (Physics.SphereCast(_groundChecker.position, rayCastRadius, -Vector3.up, out _hit, groundLayer))
-            { 
+            {
+                if (!isGrounded && !_playerManager.isInteracting)
+                {
+                    _animatorManager.PlayTargetAnimation("Falling To Landing", true);
+                }
+                
                 inAirTimer = 0f;
                 isGrounded = true;
             } else
@@ -112,6 +142,8 @@ namespace CultureFMP.Movement
         {
             if (isGrounded)
             {
+                _animatorManager.animator.SetBool("isJumping", true);
+                _animatorManager.PlayTargetAnimation("Jumping", false);
                 float _jumpingVelocity = Mathf.Sqrt(2 * gravityIntensity * jumpHeight);
                 Vector3 _playerVelocity = _moveDir;
                 _playerVelocity.y = _jumpingVelocity;
