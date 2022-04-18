@@ -115,7 +115,7 @@ namespace CultureFMP.Movement
             {
                 if (!_playerManager.isInteracting)
                 {
-                    _animatorManager.PlayTargetAnimation("Falling Idle", true);
+                    _animatorManager.PlayTargetAnimation("A_Falling", true);
                 }
                 
                 inAirTimer += Time.deltaTime;
@@ -127,7 +127,7 @@ namespace CultureFMP.Movement
             {
                 if (!isGrounded && !_playerManager.isInteracting)
                 {
-                    _animatorManager.PlayTargetAnimation("Falling To Landing", true);
+                    _animatorManager.PlayTargetAnimation("A_Landing", true);
                 }
                 
                 inAirTimer = 0f;
@@ -143,7 +143,7 @@ namespace CultureFMP.Movement
             if (isGrounded)
             {
                 _animatorManager.animator.SetBool("isJumping", true);
-                _animatorManager.PlayTargetAnimation("Jumping", false);
+                _animatorManager.PlayTargetAnimation("A_Jumping", false);
                 float _jumpingVelocity = Mathf.Sqrt(2 * gravityIntensity * jumpHeight);
                 Vector3 _playerVelocity = _moveDir;
                 _playerVelocity.y = _jumpingVelocity;
