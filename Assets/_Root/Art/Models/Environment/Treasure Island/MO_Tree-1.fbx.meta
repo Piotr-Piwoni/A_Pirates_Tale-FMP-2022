@@ -1,9 +1,19 @@
 fileFormatVersion: 2
-guid: d9dd15c07bc25b844b22bde9a6689dac
+guid: fde153725b47d7c43842c2c08e768fe9
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Leafs
+    second: {fileID: 2100000, guid: 53f4d1556329f264095d6512934ac13d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Trunk_Mat
+    second: {fileID: 2100000, guid: 23b40c3a7fb0cd54d97eff843c2c867e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -39,10 +49,10 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
-    importVisibility: 1
-    importBlendShapes: 1
-    importCameras: 1
-    importLights: 1
+    importVisibility: 0
+    importBlendShapes: 0
+    importCameras: 0
+    importLights: 0
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
