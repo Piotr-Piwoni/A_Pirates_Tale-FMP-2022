@@ -1,20 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
+using CultureFMP.Manager;
 using UnityEngine;
 
 namespace CultureFMP
 {
     public class Weapon_Manager : MonoBehaviour
     {
-        private int _weaponSelect = 1;
+        private int _weaponSelect = 0;
+
+        [SerializeField] GameObject cameraManager;
+        CameraManager camManager;
+        public GameObject endPos;
+        
 
         void Start()
         {
-        
+            camManager = cameraManager.GetComponent<CameraManager>();
         }
 
         void Update()
         {
+            if (Input.GetMouseButton(1))
+            {
+                camManager.isAiming = true;
+                camManager.camTransform.position = Vector3.Lerp(camManager.camTransform.position, endPos.transform.position, Time.deltaTime);
+                transform.rotation = camManager.camTransform.rotation;
+            }
+            else
+            {
+                camManager.isAiming = false;
+            }
 
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
@@ -45,17 +59,17 @@ namespace CultureFMP
 
         private void CutlassUpdate()
         {
-            Debug.Log("I have a cutlass");
+            
         }
 
         private void PistolUpdate()
         {
-            Debug.Log("I have a pistol");
+            
         }
 
         private void MusketUpdate()
         {
-            Debug.Log("I have a musket");
+            
         }
     }
 }

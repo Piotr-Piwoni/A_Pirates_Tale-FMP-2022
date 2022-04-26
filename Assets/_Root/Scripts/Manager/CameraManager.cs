@@ -7,7 +7,7 @@ namespace CultureFMP.Manager
     {
         #region Veriables
         private InputManager _inputManager;
-        private Transform _transform;
+        public Transform camTransform;
         private Vector3 _followVelocity = Vector3.zero;
         private Vector3 _vectorPosition;
         private float _defaultPosition;
@@ -36,14 +36,15 @@ namespace CultureFMP.Manager
         public float cameraCollisionOffset = 0.2f;
         [Tooltip("How close it need to be to the wall to offset.")]
         public float minimumCollisionOffset = 0.2f;
+        public bool isAiming = false;
         #endregion
 
         private void Awake()
         {
             targetTransform = FindObjectOfType<PlayerManager>().transform;
             _inputManager = FindObjectOfType<InputManager>();
-            if (Camera.main != null) _transform = Camera.main.transform;
-            _defaultPosition = _transform.localPosition.z;
+            if (Camera.main != null) camTransform = Camera.main.transform;
+            _defaultPosition = camTransform.localPosition.z;
             if (hideMouseCursor)
                 Cursor.lockState = CursorLockMode.Locked;
         }
@@ -52,7 +53,7 @@ namespace CultureFMP.Manager
         {
             FollowTarget();
             RotateCamera();
-            HandleCameraCollision();
+            if (!isAiming) HandleCameraCollision();
         }
 
         private void FollowTarget()
@@ -87,7 +88,7 @@ namespace CultureFMP.Manager
             float _targetPosition = _defaultPosition;
             RaycastHit _hit;
 
-            Vector3 _direction = _transform.position - cameraPivot.position;
+            Vector3 _direction = camTransform.position - cameraPivot.position;
             _direction.Normalize();
 
             if (Physics.SphereCast(cameraPivot.transform.position, cameraCollisionRadius, _direction, out _hit, Mathf.Abs(_targetPosition), collisionLayers))
@@ -101,8 +102,8 @@ namespace CultureFMP.Manager
                 _targetPosition -= minimumCollisionOffset;
             }
 
-            _vectorPosition.z = Mathf.Lerp(_transform.localPosition.z, _targetPosition, 0.2f);
-            _transform.localPosition = _vectorPosition;
+            _vectorPosition.z = Mathf.Lerp(camTransform.localPosition.z, _targetPosition, 0.2f);
+            camTransform.localPosition = _vectorPosition;
         }
     }
 }

@@ -7,12 +7,10 @@ public class Flintlock_Pistol_Script : MonoBehaviour
     private int _currentAmmo;
     [SerializeField] private int ammoCap;
 
-    Weapon_Raycasts ray;
 
     private void Start()
     {
         _currentAmmo = ammoCap;
-        ray = GetComponent<Weapon_Raycasts>();
     }
 
     void Update()
@@ -23,7 +21,7 @@ public class Flintlock_Pistol_Script : MonoBehaviour
             {
                 _currentAmmo--;
                 _fireCooldown = 0f;
-                ray.Shoot();
+                Shoot();
                 Debug.Log("Pew" + _currentAmmo); //Sound and animation trigger for shot should be here
             }
             else
@@ -32,6 +30,14 @@ public class Flintlock_Pistol_Script : MonoBehaviour
             }
         }
         _fireCooldown = _fireCooldown + Time.deltaTime;
+    }
+    public void Shoot()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit)) // Shoots out a raycast that gathers information on what it hits
+        {
+            Debug.Log(hit.transform.name); // This will show the name of the object that the raycast hits in the console
+        }
     }
 
     public void Reload()
