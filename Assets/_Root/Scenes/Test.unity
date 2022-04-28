@@ -1115,10 +1115,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueBox: {fileID: 307550753}
   label: {fileID: 594620998}
-  NPC_text: {fileID: 1150924201}
-  PLAYER_text: []
+  npcText: {fileID: 594620998}
+  playerText: []
   continueButton: 9
-  vIDE: {fileID: 988732366}
 --- !u!4 &832497095
 Transform:
   m_ObjectHideFlags: 0
@@ -1373,6 +1372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543398d1d1c4f754b94efe21dafed491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 832497094}
   isInteracting: 0
 --- !u!114 &866409320
 MonoBehaviour:
@@ -1845,17 +1845,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8ec0f05213b4044db1f456cdc1b53f7, type: 3}
---- !u!114 &1150924201 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 143259194953064106, guid: 5fe7e24c09e99974fb35952b22ffa592, type: 3}
-  m_PrefabInstance: {fileID: 143259196084054787}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1188943305
 GameObject:
   m_ObjectHideFlags: 0
@@ -2342,6 +2331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0429b1c9a25a8dd4d90e37533ddffafb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camTransform: {fileID: 0}
   targetTransform: {fileID: 866409323}
   cameraPivot: {fileID: 2018051950}
   cameraFollowSpeed: 0.2
