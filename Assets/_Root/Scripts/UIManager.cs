@@ -5,29 +5,28 @@ using UnityEngine.UI; //Import this to quickly access Unity's UI classes
 using VIDE_Data; //Import this to use VIDE Dialogue's VD class
 using TMPro;
 
-public class UIManager : MonoBehaviour {
-
-    public TextMeshProUGUI NPC_text; //References
-    public TextMeshProUGUI[] PLAYER_text; //References
-    public KeyCode continueButton; //Button to continue
+public class UIManager : MonoBehaviour
+{
+    public GameObject dialogueBox;
+    public TextMeshProUGUI label;
+    public TextMeshProUGUI NPC_text; 
+    public TextMeshProUGUI[] PLAYER_text;
+    public KeyCode continueButton;
     public VIDE_Assign vIDE;
 
     private bool keyDown = false;
 
-    void Start () {
-        //Disable UI when starting just in case
+    private void Start () 
+    {
         NPC_text.gameObject.SetActive(false);
         foreach (TextMeshProUGUI t in PLAYER_text)
             t.transform.parent.gameObject.SetActive(false);
 
-        //Subscribe to some events and Begin the Dialogue
-        VD.OnNodeChange += UpdateUI;
-        VD.OnEnd += End;
-        VD.BeginDialogue(vIDE); //This is the first most important method when using VIDE
+        Begin(vIDE);
 	}
 
     //Check if a dialogue is active and if we are NOT in a player node in order to continue
-    void Update()
+    private void Update()
     {
         if (VD.isActive)
         {
@@ -38,7 +37,7 @@ public class UIManager : MonoBehaviour {
                     keyDown = false;
                 } else
                 {
-                    VD.Next(); //Second most important method when using VIDE
+                    VD.Next();
                 }
             }
         } else
@@ -50,24 +49,40 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    //This method is called by the UI Buttons! Check their button component in the Inspector!
+    private void Begin(VIDE_Assign dialogue)
+    { 
+        NPC_text.text = "";
+        label.text = "";
+
+        VD.OnNodeChange += UpdateUI;
+        VD.OnEnd += End;
+
+        VD.BeginDialogue(dialogue);
+
+        dialogueBox.SetActive(true);
+    }
+
     public void SelectChoiceAndGoToNext(int playerChoice)
     {
         keyDown = true;
-        VD.nodeData.commentIndex = playerChoice; //Setting this when on a player node will decide which node we go next
+        VD.nodeData.commentIndex = playerChoice;
         VD.Next();
     }
-	
-    //Every time VD.nodeData is updated, this method will be called. (Because we subscribed it to OnNodeChange event)
-	void UpdateUI (VD.NodeData data) {
 
-        WipeAll(); //Turn stuff off first
+	private void UpdateUI (VD.NodeData data)
+    {
+        WipeAll();
 
-		if (!data.isPlayer) //For NPC. Activate text gameobject and set its text
+		if (!data.isPlayer)
         {
             NPC_text.gameObject.SetActive(true);
             NPC_text.text = data.comments[data.commentIndex];
-        } else //For Player. It will activate the required Buttons and set their text
+
+            if (data.tag.Length > 0)
+                label.text = data.tag;
+            else
+                label.text = VD.assigned.alias;
+        } else
         {
             for (int i = 0; i < PLAYER_text.Length; i++)
             {
@@ -85,28 +100,27 @@ public class UIManager : MonoBehaviour {
         }
 	}
 
-    //Set all UI references off
-    void WipeAll()
+    private void WipeAll()
     {
         NPC_text.gameObject.SetActive(false);
         foreach (TextMeshProUGUI t in PLAYER_text)
             t.transform.parent.gameObject.SetActive(false);
     }
 
-    //This will be called when we reach the end of the dialogue.
-    //Very important that this gets called before we call BeginDialogue again!
-    void End(VD.NodeData data)
+    private void End(VD.NodeData data)
     {
         VD.OnNodeChange -= UpdateUI;
         VD.OnEnd -= End;
+        dialogueBox.SetActive(false);
         VD.EndDialogue(); //Third most important method when using VIDE     
         WipeAll();
     }
 
     //Just in case something happens to this script
-    void OnDisable()
+    private void OnDisable()
     {
         VD.OnNodeChange -= UpdateUI;
+        if(dialogueBox != null) dialogueBox.SetActive(false);
         VD.OnEnd -= End;
     }
 }
