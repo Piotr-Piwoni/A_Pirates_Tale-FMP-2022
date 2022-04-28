@@ -1,5 +1,6 @@
 using UnityEngine;
 using CultureFMP.Movement;
+using VIDE_Data;
 
 namespace CultureFMP.Manager
 {
@@ -10,7 +11,8 @@ namespace CultureFMP.Manager
         private InputManager _inputManager;
         private CharacterLocomotion _characterLocomotion;
         private CameraManager _cameraManager;
-
+        
+        public UIManager uiManager;
         public bool isInteracting;
 
         private void Awake()
@@ -24,6 +26,32 @@ namespace CultureFMP.Manager
         private void Update()
         {
             _inputManager.HandleAllInputs();
+            
+            if (Input.GetKeyDown(KeyCode.E) && !VD.isActive)
+            {
+                TryInteract();
+            }
+        }
+
+        private void TryInteract()
+        {
+            isInteracting = true;
+            
+            RaycastHit rHit;
+
+            if (Physics.Raycast(transform.position, transform.forward, out rHit, 2))
+            {
+                VIDE_Assign assigned;
+                if (rHit.collider.GetComponent<VIDE_Assign>() != null)
+                    assigned = rHit.collider.GetComponent<VIDE_Assign>();
+                else return;
+
+                uiManager.Begin(assigned); 
+            }
+            else
+            {
+                isInteracting = false;
+            }
         }
 
         private void FixedUpdate()
