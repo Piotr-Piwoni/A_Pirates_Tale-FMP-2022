@@ -10,8 +10,9 @@ namespace CultureFMP
         [SerializeField] GameObject cameraManager;
         CameraManager camManager;
         public GameObject endPos;
+        public GameObject mainPos;
+        [SerializeField] private float adsSpeedMultiplier;
         
-
         void Start()
         {
             camManager = cameraManager.GetComponent<CameraManager>();
@@ -22,12 +23,18 @@ namespace CultureFMP
             if (Input.GetMouseButton(1))
             {
                 camManager.isAiming = true;
-                camManager.camTransform.position = Vector3.Lerp(camManager.camTransform.position, endPos.transform.position, Time.deltaTime);
+                camManager.camTransform.position = Vector3.Lerp(camManager.camTransform.position, endPos.transform.position, Time.deltaTime * adsSpeedMultiplier);
                 transform.rotation = camManager.camTransform.rotation;
             }
             else
             {
                 camManager.isAiming = false;
+                camManager.camTransform.position = Vector3.Lerp(camManager.camTransform.position, mainPos.transform.position, Time.deltaTime * adsSpeedMultiplier);
+            }
+
+            if (Input.GetMouseButtonUp(1))
+            {
+                Debug.Log("up");
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1))
