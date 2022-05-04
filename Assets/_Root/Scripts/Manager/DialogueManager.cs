@@ -30,11 +30,11 @@ namespace CultureFMP.Manager
         }
 
         //This begins the dialogue and progresses through it (Called by VIDEDemoPlayer.cs)
-        public void Interact(VIDE_Assign dialogue)
+        public void Interact(VIDE_Assign _dialogue)
         {
             if (!VD.isActive)
             {
-                Begin(dialogue);
+                Begin(_dialogue);
             } else
             {
                 CallNext();
@@ -58,12 +58,12 @@ namespace CultureFMP.Manager
 
             dialogueBox.SetActive(true);
         }
-        
-        public void CallNext()
+
+        private void CallNext()
         {
             if (_animatingText) { CutTextAnim(); return; }
 
-            if (!_dialoguePaused) //Only if
+            if (!_dialoguePaused)
             {       
                 VD.Next();
             }  
@@ -92,8 +92,9 @@ namespace CultureFMP.Manager
                     
                     for (int i = 0; i < _currentChoices.Count; i++)
                     {
-                        _currentChoices[i].color = Color.white;
-                        if (i == _data.commentIndex) _currentChoices[i].color = Color.yellow;
+                        _currentChoices[i].faceColor = Color.red;
+                        if (i == _data.commentIndex) 
+                            _currentChoices[i].faceColor = Color.yellow;
                     }
                 }
             }
@@ -117,10 +118,7 @@ namespace CultureFMP.Manager
                 SetOptions(_data.comments);
 
                 //If it has a tag, show it, otherwise let's use the alias we set in the VIDE Assign
-                if (_data.tag.Length > 0)
-                    nameLabel.text = _data.tag;
-                else
-                    nameLabel.text = videPlayer.playerName;
+                nameLabel.text = _data.tag.Length > 0 ? _data.tag : videPlayer.playerName;
             }
             else
             {
@@ -142,18 +140,18 @@ namespace CultureFMP.Manager
         {
             for (int i = 0; i < _choices.Length; i++)
             {
-                GameObject _newOp = Instantiate(playerChoiceUI.gameObject, playerChoiceUI.transform.position, Quaternion.identity, playerButtonGroup.transform) as GameObject;
-                _newOp.transform.SetParent(playerChoiceUI.transform.parent, true);
+                GameObject _newOp = Instantiate(playerChoiceUI, playerChoiceUI.transform.position, Quaternion.identity) as GameObject;
+                _newOp.transform.SetParent(playerButtonGroup.transform.parent, true);
                 _newOp.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 20 - (20 * i));
                 _newOp.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-                _newOp.GetComponent<TextMeshProUGUI>().text = _choices[i];
+                _newOp.GetComponentInChildren<TextMeshProUGUI>().text = _choices[i];
                 _newOp.SetActive(true);
 
                 _currentChoices.Add(_newOp.GetComponent<TextMeshProUGUI>()); 
             }
         }
-        
-        void EndDialogue(VD.NodeData _data)
+
+        private void EndDialogue(VD.NodeData _data)
         {
             VD.OnActionNode -= ActionHandler;
             VD.OnNodeChange -= UpdateUI;
@@ -162,7 +160,6 @@ namespace CultureFMP.Manager
             VD.EndDialogue();
 
             VD.SaveState("TestScene2", true);
-            QuestChartDemo.SaveProgress();
         }
 
         void OnDisable()
@@ -176,8 +173,8 @@ namespace CultureFMP.Manager
                 dialogueBox.SetActive(false);
             VD.EndDialogue();
         }
-        
-        void PostConditions(VD.NodeData _data)
+
+        private void PostConditions(VD.NodeData _data)
         {
             if (_data.pausedAction) return;
 
@@ -185,15 +182,13 @@ namespace CultureFMP.Manager
             {
                 if (_data.extraData[_data.commentIndex].Contains("fs"))
                 {
-                    int _fSize = 14;
-
                     string[] _fontSize = _data.extraData[_data.commentIndex].Split(","[0]);
-                    int.TryParse(_fontSize[1], out _fSize);
+                    int.TryParse(_fontSize[1], out var _fSize);
                     textBox.fontSize = _fSize;
                 }
                 else
                 {
-                    textBox.fontSize = 14;
+                    textBox.fontSize = 36;
                 }
             }
         }
@@ -240,7 +235,7 @@ namespace CultureFMP.Manager
             _animatingText = false;
         }
 
-        void CutTextAnim()
+        private void CutTextAnim()
         {
             StopCoroutine(_textAnimatorCO);
             textBox.text = VD.nodeData.comments[VD.nodeData.commentIndex];	

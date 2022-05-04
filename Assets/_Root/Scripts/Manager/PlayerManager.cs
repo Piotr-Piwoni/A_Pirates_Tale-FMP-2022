@@ -12,7 +12,7 @@ namespace CultureFMP.Manager
         private InputManager _inputManager;
         private CharacterLocomotion _characterLocomotion;
         private CameraManager _cameraManager;
-        private VIDE_Assign _currentDialogue;
+        [SerializeField] private VIDE_Assign _currentDialogue;
         
         public DialogueManager dialogueManager;
         public bool isInteracting;
