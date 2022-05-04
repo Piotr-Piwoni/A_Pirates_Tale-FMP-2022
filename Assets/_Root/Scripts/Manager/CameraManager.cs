@@ -36,7 +36,6 @@ namespace CultureFMP.Manager
         public float cameraCollisionOffset = 0.2f;
         [Tooltip("How close it need to be to the wall to offset.")]
         public float minimumCollisionOffset = 0.2f;
-        public bool isAiming = false;
         #endregion
 
         private void Awake()
@@ -53,7 +52,7 @@ namespace CultureFMP.Manager
         {
             FollowTarget();
             RotateCamera();
-            if (!isAiming) HandleCameraCollision();
+            HandleCameraCollision();
         }
 
         private void FollowTarget()

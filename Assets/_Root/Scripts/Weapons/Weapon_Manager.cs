@@ -7,29 +7,21 @@ namespace CultureFMP
     {
         private int _weaponSelect = 0;
 
-        [SerializeField] GameObject cameraManager;
-        CameraManager camManager;
-        public GameObject endPos;
-        public GameObject mainPos;
-        [SerializeField] private float adsSpeedMultiplier;
-        
-        void Start()
-        {
-            camManager = cameraManager.GetComponent<CameraManager>();
-        }
+        [SerializeField] private CameraManager cameraManager;
+        [SerializeField] private GameObject targetADS;
 
         void Update()
         {
             if (Input.GetMouseButton(1))
             {
-                camManager.isAiming = true;
-                camManager.camTransform.position = Vector3.Lerp(camManager.camTransform.position, endPos.transform.position, Time.deltaTime * adsSpeedMultiplier);
-                transform.rotation = camManager.camTransform.rotation;
+                cameraManager.targetTransform = targetADS.transform;
+                transform.rotation = cameraManager.camTransform.rotation;
+                cameraManager.cameraFollowSpeed = 0.2f;
             }
             else
             {
-                camManager.isAiming = false;
-                camManager.camTransform.position = Vector3.Lerp(camManager.camTransform.position, mainPos.transform.position, Time.deltaTime * adsSpeedMultiplier);
+                cameraManager.cameraFollowSpeed = 0.2f;
+                cameraManager.targetTransform = gameObject.transform;
             }
 
             if (Input.GetMouseButtonUp(1))
