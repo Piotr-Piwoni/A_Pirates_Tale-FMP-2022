@@ -30,6 +30,9 @@ public class Flintlock_Pistol_Script : MonoBehaviour
             }
         }
         _fireCooldown = _fireCooldown + Time.deltaTime;
+
+        Vector3 forward = transform.TransformDirection(Vector3.forward) * 10000;
+        Debug.DrawRay(transform.position, forward, Color.green);
     }
     public void Shoot()
     {
