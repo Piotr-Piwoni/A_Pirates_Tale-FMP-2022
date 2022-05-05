@@ -19,7 +19,7 @@ namespace CultureFMP.Manager
         public VIDEDemoPlayer videPlayer;
         private bool _dialoguePaused;
         private bool _animatingText; 
-        private List<TextMeshProUGUI> _currentChoices = new List<TextMeshProUGUI>();
+        private List<Button> _currentChoices = new List<Button>();
 
         private IEnumerator _textAnimatorCO;
         private void Awake()
@@ -46,10 +46,6 @@ namespace CultureFMP.Manager
             textBox.text = "";
             nameLabel.text = "";
 
-            //First step is to call BeginDialogue, passing the required VIDE_Assign component 
-            //This will store the first Node data in VD.nodeData
-            //But before we do so, let's subscribe to certain events that will allow us to easily
-            //Handle the node-changes
             VD.OnActionNode += ActionHandler;
             VD.OnNodeChange += UpdateUI;
             VD.OnEnd += EndDialogue;
@@ -75,8 +71,6 @@ namespace CultureFMP.Manager
 
             if (VD.isActive)
             {
-                //Scroll through Player dialogue options if dialogue is not paused and we are on a player node
-                //For player nodes, NodeData.commentIndex is the index of the picked choice
                 if (_data.isPlayer)
                 {
                     if (Input.GetKeyDown(KeyCode.S))
@@ -91,10 +85,10 @@ namespace CultureFMP.Manager
                     }
                     
                     for (int i = 0; i < _currentChoices.Count; i++)
-                    {
-                        _currentChoices[i].faceColor = Color.red;
-                        if (i == _data.commentIndex) 
-                            _currentChoices[i].faceColor = Color.yellow;
+                    {   
+                        _currentChoices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
+                        if (i == _data.commentIndex)
+                            _currentChoices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.yellow;
                     }
                 }
             }
@@ -102,14 +96,11 @@ namespace CultureFMP.Manager
         
         private void UpdateUI(VD.NodeData _data)
         {
-            //Reset some variables
-            //Destroy the current choices
-            foreach (TextMeshProUGUI _op in _currentChoices)
+            foreach (Button _op in _currentChoices)
                 Destroy(_op.gameObject);
-            _currentChoices = new List<TextMeshProUGUI>();
+            _currentChoices = new List<Button>();
             textBox.text = "";
 
-            //Look for dynamic text change in extraData
             PostConditions(_data);
 
             //If this new Node is a Player Node, set the player choices offered by the node
@@ -140,14 +131,14 @@ namespace CultureFMP.Manager
         {
             for (int i = 0; i < _choices.Length; i++)
             {
-                GameObject _newOp = Instantiate(playerChoiceUI, playerChoiceUI.transform.position, Quaternion.identity) as GameObject;
+                GameObject _newOp = Instantiate(playerChoiceUI, playerChoiceUI.transform.position, Quaternion.identity, playerButtonGroup.transform) as GameObject;
                 _newOp.transform.SetParent(playerButtonGroup.transform.parent, true);
                 _newOp.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 20 - (20 * i));
                 _newOp.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
                 _newOp.GetComponentInChildren<TextMeshProUGUI>().text = _choices[i];
                 _newOp.SetActive(true);
 
-                _currentChoices.Add(_newOp.GetComponent<TextMeshProUGUI>()); 
+                _currentChoices.Add(_newOp.GetComponent<Button>()); 
             }
         }
 
@@ -164,8 +155,6 @@ namespace CultureFMP.Manager
 
         void OnDisable()
         {
-            //If the script gets destroyed, let's make sure we force-end the dialogue to prevent errors
-            //We do not save changes
             VD.OnActionNode -= ActionHandler;
             VD.OnNodeChange -= UpdateUI;
             VD.OnEnd -= EndDialogue;
