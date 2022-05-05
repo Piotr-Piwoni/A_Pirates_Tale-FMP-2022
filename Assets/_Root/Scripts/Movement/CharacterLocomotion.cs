@@ -1,6 +1,5 @@
-using UnityEngine;
 using CultureFMP.Manager;
-using UnityEngine.Serialization;
+using UnityEngine;
 
 namespace CultureFMP.Movement
 {
