@@ -229,12 +229,21 @@ namespace CultureFMP.InputA
         },
         {
             ""name"": ""Player Actions"",
-            ""id"": ""2fbcf8f9-1173-4337-a5c6-92f6a14b3677"",
+            ""id"": ""67e575ca-a477-463b-a361-d80b941e34dc"",
             ""actions"": [
                 {
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
-                    ""id"": ""1c105278-8072-4284-ac4e-7ba641853356"",
+                    ""id"": ""5b1476bd-1da0-49cb-b475-d3bb41eee8a8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""ebb6d9c4-24aa-4a68-b56d-b0d41ba79aa0"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -244,12 +253,45 @@ namespace CultureFMP.InputA
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""630f1345-5c9c-4728-9a48-07b142d45c1b"",
+                    ""id"": ""31a4ffd7-d12c-4beb-8c9d-df015125819d"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1602832a-e18b-44de-aee5-f72d0d41eff7"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b49ff1e5-4bb6-4b6a-9c05-e8fe3d089f9d"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f1f0a604-7c43-41d7-9c40-303db816f3d3"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -265,6 +307,7 @@ namespace CultureFMP.InputA
             // Player Actions
             m_PlayerActions = asset.FindActionMap("Player Actions", throwIfNotFound: true);
             m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
+            m_PlayerActions_Sprint = m_PlayerActions.FindAction("Sprint", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -366,11 +409,13 @@ namespace CultureFMP.InputA
         private readonly InputActionMap m_PlayerActions;
         private IPlayerActionsActions m_PlayerActionsActionsCallbackInterface;
         private readonly InputAction m_PlayerActions_Jump;
+        private readonly InputAction m_PlayerActions_Sprint;
         public struct PlayerActionsActions
         {
             private @InputActions m_Wrapper;
             public PlayerActionsActions(@InputActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
+            public InputAction @Sprint => m_Wrapper.m_PlayerActions_Sprint;
             public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -383,6 +428,9 @@ namespace CultureFMP.InputA
                     @Jump.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnJump;
                     @Jump.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnJump;
                     @Jump.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnJump;
+                    @Sprint.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnSprint;
+                    @Sprint.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnSprint;
+                    @Sprint.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnSprint;
                 }
                 m_Wrapper.m_PlayerActionsActionsCallbackInterface = instance;
                 if (instance != null)
@@ -390,6 +438,9 @@ namespace CultureFMP.InputA
                     @Jump.started += instance.OnJump;
                     @Jump.performed += instance.OnJump;
                     @Jump.canceled += instance.OnJump;
+                    @Sprint.started += instance.OnSprint;
+                    @Sprint.performed += instance.OnSprint;
+                    @Sprint.canceled += instance.OnSprint;
                 }
             }
         }
@@ -402,6 +453,7 @@ namespace CultureFMP.InputA
         public interface IPlayerActionsActions
         {
             void OnJump(InputAction.CallbackContext context);
+            void OnSprint(InputAction.CallbackContext context);
         }
     }
 }
