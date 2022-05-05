@@ -10,9 +10,9 @@ namespace CultureFMP
         [SerializeField] private CameraManager cameraManager;
         [SerializeField] private GameObject targetADS;
 
-        [SerializeField] private GameObject _cutlass;
-        [SerializeField] private GameObject _pistol;
-        [SerializeField] private GameObject _musket;
+        /*        [SerializeField] private GameObject _cutlass;
+                [SerializeField] private GameObject _pistol;
+                [SerializeField] private GameObject _musket;*/
 
         void Update()
         {
@@ -28,7 +28,9 @@ namespace CultureFMP
                 cameraManager.targetTransform = gameObject.transform;
             }
 
-            if (Input.GetMouseButtonUp(1))
+        }
+
+/*            if (Input.GetMouseButtonUp(1))
             {
                 Debug.Log("up");
             }
@@ -89,6 +91,7 @@ namespace CultureFMP
         private void MusketUpdate()
         {
             
-        }
+        }*/
+        
     }
 }
