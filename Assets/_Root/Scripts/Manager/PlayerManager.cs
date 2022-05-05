@@ -16,6 +16,7 @@ namespace CultureFMP.Manager
         
         public DialogueManager dialogueManager;
         public bool isInteracting;
+        public bool inDialogue;
 
         private void Awake()
         {
@@ -29,9 +30,13 @@ namespace CultureFMP.Manager
         {
             _inputManager.HandleAllInputs();
 
-            if (VD.isActive) 
-                isInteracting = true;
-
+            if (VD.isActive)
+                inDialogue = true;
+            else
+            {
+                inDialogue = false;
+            }
+            
             if (Input.GetKeyDown(KeyCode.E))
             {
                 TryInteract();
@@ -61,7 +66,7 @@ namespace CultureFMP.Manager
             }
         }
 
-        private void OnTriggerExit()
+        private void OnTriggerExit(Collider _other)
         {
             _currentDialogue = null;
         }

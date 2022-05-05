@@ -18,7 +18,8 @@ namespace CultureFMP.Manager
         public TextMeshProUGUI nameLabel;
         public VIDEDemoPlayer videPlayer;
         private bool _dialoguePaused;
-        private bool _animatingText; 
+        private bool _animatingText;
+        public InputManager _inputManager;
         private List<Button> _currentChoices = new List<Button>();
 
         private IEnumerator _textAnimatorCO;
@@ -73,22 +74,21 @@ namespace CultureFMP.Manager
             {
                 if (_data.isPlayer)
                 {
-                    if (Input.GetKeyDown(KeyCode.S))
-                    {
-                        if (_data.commentIndex < _currentChoices.Count - 1)
-                            _data.commentIndex++;
-                    }
-                    if (Input.GetKeyDown(KeyCode.W))
+                    if (Input.GetKeyDown(KeyCode.UpArrow) || _inputManager.mouseWheelInput > 0f)
                     {
                         if (_data.commentIndex > 0)
                             _data.commentIndex--;
                     }
-                    
+                    if (Input.GetKeyDown(KeyCode.DownArrow) || _inputManager.mouseWheelInput < 0f)
+                    {
+                        if (_data.commentIndex < _currentChoices.Count - 1)
+                            _data.commentIndex++;
+                    }
                     for (int i = 0; i < _currentChoices.Count; i++)
                     {   
-                        _currentChoices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
+                        _currentChoices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
                         if (i == _data.commentIndex)
-                            _currentChoices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.yellow;
+                            _currentChoices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.cyan;
                     }
                 }
             }
@@ -100,12 +100,16 @@ namespace CultureFMP.Manager
                 Destroy(_op.gameObject);
             _currentChoices = new List<Button>();
             textBox.text = "";
+            nameLabel.text = "";
 
             PostConditions(_data);
 
             //If this new Node is a Player Node, set the player choices offered by the node
             if (_data.isPlayer)
             {
+                nameLabel.transform.parent.gameObject.SetActive(false);
+                textBox.transform.parent.gameObject.SetActive(false);
+                
                 SetOptions(_data.comments);
 
                 //If it has a tag, show it, otherwise let's use the alias we set in the VIDE Assign
@@ -113,7 +117,9 @@ namespace CultureFMP.Manager
             }
             else
             {
-
+                nameLabel.transform.parent.gameObject.SetActive(true);
+                textBox.transform.parent.gameObject.SetActive(true);
+                
                 //This coroutine animates the NPC text instead of displaying it all at once
                 _textAnimatorCO = DrawTextCO(_data.comments[_data.commentIndex], 0.02f);
                 StartCoroutine(_textAnimatorCO);
@@ -125,14 +131,13 @@ namespace CultureFMP.Manager
                     nameLabel.text = VD.assigned.alias;
             }
         }
-
-        //This uses the returned string[] from nodeData.comments to create the UIs for each comment
+        
         private void SetOptions(string[] _choices)
         {
             for (int i = 0; i < _choices.Length; i++)
             {
-                GameObject _newOp = Instantiate(playerChoiceUI, playerChoiceUI.transform.position, Quaternion.identity, playerButtonGroup.transform) as GameObject;
-                _newOp.transform.SetParent(playerButtonGroup.transform.parent, true);
+                GameObject _newOp = Instantiate(playerChoiceUI, playerChoiceUI.transform.position, Quaternion.identity);
+                _newOp.transform.SetParent(playerButtonGroup.transform, false);
                 _newOp.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 20 - (20 * i));
                 _newOp.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
                 _newOp.GetComponentInChildren<TextMeshProUGUI>().text = _choices[i];

@@ -50,7 +50,7 @@ namespace CultureFMP.Movement
         {
             HandleFallingAndLanding();
             
-            if (_playerManager.isInteracting)
+            if (_playerManager.isInteracting || _playerManager.inDialogue)
                 return;
             HandleMovement();
             HandleRotation();
@@ -139,7 +139,7 @@ namespace CultureFMP.Movement
 
         public void HandleJumping()
         {
-            if (isGrounded)
+            if (isGrounded && !_playerManager.inDialogue)
             {
                 _animatorManager.animator.SetBool("isJumping", true);
                 _animatorManager.PlayTargetAnimation("A_Jumping", false);
