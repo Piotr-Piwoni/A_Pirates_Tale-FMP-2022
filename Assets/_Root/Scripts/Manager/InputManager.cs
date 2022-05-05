@@ -15,12 +15,13 @@ namespace CultureFMP.Manager
         [SerializeField] private Vector2 cameraInput;
         [SerializeField] private bool sprintInput;
         [SerializeField] private bool jumpInput;
-
+        
         public float horizontalInput;
         public float verticalInput;
         public float moveAmount;
         public float cameraInputX;
         public float cameraInputY;
+        public float mouseWheelInput;
 
         private void Awake()
         {
@@ -40,6 +41,9 @@ namespace CultureFMP.Manager
                 _inputActions.PlayerActions.Sprint.performed += i => sprintInput = true;
                 _inputActions.PlayerActions.Sprint.canceled += i => sprintInput = false;
                 _inputActions.PlayerActions.Jump.performed += i => jumpInput = true;
+                _inputActions.PlayerActions.Jump.canceled += i => jumpInput = false;
+
+                _inputActions.DialogueActions.ChooseOptionMouse.performed += i => mouseWheelInput = i.ReadValue<float>();
             }
 
             _inputActions.Enable();
@@ -82,11 +86,9 @@ namespace CultureFMP.Manager
         
         private void HandleJumpInput()
         {
-            if (jumpInput)
-            {
-                _characterLocomotion.HandleJumping();
-                jumpInput = false;
-            }
+            if (!jumpInput) return;
+            _characterLocomotion.HandleJumping();
+            jumpInput = false;
         }
     }
 }

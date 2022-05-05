@@ -248,6 +248,15 @@ namespace CultureFMP.InputA
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""7b0be139-6c6f-4281-bb56-0e29458f89b1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -294,6 +303,87 @@ namespace CultureFMP.InputA
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4483017-b033-43f5-9231-477ceea349a7"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Dialogue Actions"",
+            ""id"": ""8711e168-be50-40a6-9cf2-ee32805cd81d"",
+            ""actions"": [
+                {
+                    ""name"": ""ChooseOption-Mouse"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""61a03fac-0fb4-4d73-a790-6357031dcfdb"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChooseOption-Arrows"",
+                    ""type"": ""Button"",
+                    ""id"": ""2c3edb04-7518-450e-9657-2117cd13f53b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""b5af6752-b793-4ff4-9376-52d5e1188978"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseOption-Mouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Arrows"",
+                    ""id"": ""efffdaee-a70b-41b7-b03a-b0099f5b8fe5"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseOption-Arrows"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""6d93bddc-6373-4920-80a5-0113ed964b72"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseOption-Arrows"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""33b3dfb7-daf2-4ba2-bb49-4f83478119c2"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseOption-Arrows"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -308,6 +398,11 @@ namespace CultureFMP.InputA
             m_PlayerActions = asset.FindActionMap("Player Actions", throwIfNotFound: true);
             m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
             m_PlayerActions_Sprint = m_PlayerActions.FindAction("Sprint", throwIfNotFound: true);
+            m_PlayerActions_Interact = m_PlayerActions.FindAction("Interact", throwIfNotFound: true);
+            // Dialogue Actions
+            m_DialogueActions = asset.FindActionMap("Dialogue Actions", throwIfNotFound: true);
+            m_DialogueActions_ChooseOptionMouse = m_DialogueActions.FindAction("ChooseOption-Mouse", throwIfNotFound: true);
+            m_DialogueActions_ChooseOptionArrows = m_DialogueActions.FindAction("ChooseOption-Arrows", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -410,12 +505,14 @@ namespace CultureFMP.InputA
         private IPlayerActionsActions m_PlayerActionsActionsCallbackInterface;
         private readonly InputAction m_PlayerActions_Jump;
         private readonly InputAction m_PlayerActions_Sprint;
+        private readonly InputAction m_PlayerActions_Interact;
         public struct PlayerActionsActions
         {
             private @InputActions m_Wrapper;
             public PlayerActionsActions(@InputActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
             public InputAction @Sprint => m_Wrapper.m_PlayerActions_Sprint;
+            public InputAction @Interact => m_Wrapper.m_PlayerActions_Interact;
             public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -431,6 +528,9 @@ namespace CultureFMP.InputA
                     @Sprint.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnSprint;
                     @Sprint.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnSprint;
                     @Sprint.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnSprint;
+                    @Interact.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnInteract;
+                    @Interact.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnInteract;
+                    @Interact.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnInteract;
                 }
                 m_Wrapper.m_PlayerActionsActionsCallbackInterface = instance;
                 if (instance != null)
@@ -441,10 +541,54 @@ namespace CultureFMP.InputA
                     @Sprint.started += instance.OnSprint;
                     @Sprint.performed += instance.OnSprint;
                     @Sprint.canceled += instance.OnSprint;
+                    @Interact.started += instance.OnInteract;
+                    @Interact.performed += instance.OnInteract;
+                    @Interact.canceled += instance.OnInteract;
                 }
             }
         }
         public PlayerActionsActions @PlayerActions => new PlayerActionsActions(this);
+
+        // Dialogue Actions
+        private readonly InputActionMap m_DialogueActions;
+        private IDialogueActionsActions m_DialogueActionsActionsCallbackInterface;
+        private readonly InputAction m_DialogueActions_ChooseOptionMouse;
+        private readonly InputAction m_DialogueActions_ChooseOptionArrows;
+        public struct DialogueActionsActions
+        {
+            private @InputActions m_Wrapper;
+            public DialogueActionsActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+            public InputAction @ChooseOptionMouse => m_Wrapper.m_DialogueActions_ChooseOptionMouse;
+            public InputAction @ChooseOptionArrows => m_Wrapper.m_DialogueActions_ChooseOptionArrows;
+            public InputActionMap Get() { return m_Wrapper.m_DialogueActions; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(DialogueActionsActions set) { return set.Get(); }
+            public void SetCallbacks(IDialogueActionsActions instance)
+            {
+                if (m_Wrapper.m_DialogueActionsActionsCallbackInterface != null)
+                {
+                    @ChooseOptionMouse.started -= m_Wrapper.m_DialogueActionsActionsCallbackInterface.OnChooseOptionMouse;
+                    @ChooseOptionMouse.performed -= m_Wrapper.m_DialogueActionsActionsCallbackInterface.OnChooseOptionMouse;
+                    @ChooseOptionMouse.canceled -= m_Wrapper.m_DialogueActionsActionsCallbackInterface.OnChooseOptionMouse;
+                    @ChooseOptionArrows.started -= m_Wrapper.m_DialogueActionsActionsCallbackInterface.OnChooseOptionArrows;
+                    @ChooseOptionArrows.performed -= m_Wrapper.m_DialogueActionsActionsCallbackInterface.OnChooseOptionArrows;
+                    @ChooseOptionArrows.canceled -= m_Wrapper.m_DialogueActionsActionsCallbackInterface.OnChooseOptionArrows;
+                }
+                m_Wrapper.m_DialogueActionsActionsCallbackInterface = instance;
+                if (instance != null)
+                {
+                    @ChooseOptionMouse.started += instance.OnChooseOptionMouse;
+                    @ChooseOptionMouse.performed += instance.OnChooseOptionMouse;
+                    @ChooseOptionMouse.canceled += instance.OnChooseOptionMouse;
+                    @ChooseOptionArrows.started += instance.OnChooseOptionArrows;
+                    @ChooseOptionArrows.performed += instance.OnChooseOptionArrows;
+                    @ChooseOptionArrows.canceled += instance.OnChooseOptionArrows;
+                }
+            }
+        }
+        public DialogueActionsActions @DialogueActions => new DialogueActionsActions(this);
         public interface IPlayerMovementActions
         {
             void OnMovement(InputAction.CallbackContext context);
@@ -454,6 +598,12 @@ namespace CultureFMP.InputA
         {
             void OnJump(InputAction.CallbackContext context);
             void OnSprint(InputAction.CallbackContext context);
+            void OnInteract(InputAction.CallbackContext context);
+        }
+        public interface IDialogueActionsActions
+        {
+            void OnChooseOptionMouse(InputAction.CallbackContext context);
+            void OnChooseOptionArrows(InputAction.CallbackContext context);
         }
     }
 }

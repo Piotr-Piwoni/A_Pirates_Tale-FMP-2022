@@ -8,6 +8,7 @@ namespace CultureFMP.Manager
     {
         [HideInInspector]
         public Animator animator;
+        public PlayerManager playerManager;
         
         private int _horizontal;
         private int _vertical;
@@ -32,7 +33,10 @@ namespace CultureFMP.Manager
 
             #region Snapped Horizontal
 
-                if (_horizontalMovement > 0 && _horizontalMovement < 0.55f)
+                if (playerManager.inDialogue)
+                    return;
+                
+                if (_horizontalMovement > 0 && _horizontalMovement < 0.55f )
                 {
                     _snappedHorizontal = 0.5f;
                 } else if (_horizontalMovement > 0.55f)
@@ -48,10 +52,13 @@ namespace CultureFMP.Manager
                 {
                     _snappedHorizontal = 0;
                 }
-                
+
             #endregion
             #region Snapped Vertical
-            
+                
+                if (playerManager.inDialogue)
+                    return;
+                
                 if (_verticalMovement > 0 && _verticalMovement < 0.55f)
                 {
                     _snappedVertical = 0.5f;
@@ -71,7 +78,7 @@ namespace CultureFMP.Manager
 
             #endregion
 
-            if (_isSprinting)
+            if (_isSprinting && !playerManager.inDialogue)
             {
                 _snappedHorizontal = _horizontalMovement;
                 _snappedVertical = 2;
