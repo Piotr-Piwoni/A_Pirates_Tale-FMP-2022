@@ -940,6 +940,7 @@ MonoBehaviour:
   textBox: {fileID: 1466443834}
   nameLabel: {fileID: 226013156}
   videPlayer: {fileID: 0}
+  _inputManager: {fileID: 0}
 --- !u!4 &846216887
 Transform:
   m_ObjectHideFlags: 0
@@ -1276,7 +1277,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35dc0b6fd04824b47836fd3da10db233, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -206.2
+      value: -284
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35dc0b6fd04824b47836fd3da10db233, type: 3}
       propertyPath: m_LocalPosition.z
