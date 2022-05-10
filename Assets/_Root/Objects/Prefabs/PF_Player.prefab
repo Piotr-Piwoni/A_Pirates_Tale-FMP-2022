@@ -993,6 +993,7 @@ MonoBehaviour:
   moveAmount: 0
   cameraInputX: 0
   cameraInputY: 0
+  mouseWheelInput: 0
 --- !u!114 &82154243139287718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1005,7 +1006,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543398d1d1c4f754b94efe21dafed491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentDialogue: {fileID: 0}
+  dialogueManager: {fileID: 0}
   isInteracting: 0
+  inDialogue: 0
 --- !u!114 &82154243139287719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1067,6 +1071,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  playerManager: {fileID: 82154243139287718}
 --- !u!114 &4084793772201233395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1081,9 +1086,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraManager: {fileID: 0}
   targetADS: {fileID: 2616744996521363696}
-  _cutlass: {fileID: 0}
-  _pistol: {fileID: 0}
-  _musket: {fileID: 0}
 --- !u!1 &82154243157265424
 GameObject:
   m_ObjectHideFlags: 0
@@ -1634,7 +1636,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2616744996521363696}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 0, z: 3}
+  m_LocalPosition: {x: 4.12, y: 1.22, z: 3.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 82154243139287722}
