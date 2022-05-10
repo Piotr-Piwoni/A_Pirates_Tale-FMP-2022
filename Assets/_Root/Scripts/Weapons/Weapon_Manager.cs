@@ -10,9 +10,8 @@ namespace CultureFMP
         [SerializeField] private CameraManager cameraManager;
         [SerializeField] private GameObject targetADS;
 
-        /*        [SerializeField] private GameObject _cutlass;
-                [SerializeField] private GameObject _pistol;
-                [SerializeField] private GameObject _musket;*/
+        [SerializeField] private GameObject _cutlass;
+        [SerializeField] private GameObject _pistol;
 
         void Update()
         {
@@ -28,40 +27,23 @@ namespace CultureFMP
                 cameraManager.targetTransform = gameObject.transform;
             }
 
-        }
-
-/*            if (Input.GetMouseButtonUp(1))
-            {
-                Debug.Log("up");
-            }
-
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 _weaponSelect = 1;
                 _cutlass.SetActive(true);
                 _pistol.SetActive(false);
-                _musket.SetActive(false);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 _weaponSelect = 2;
                 _cutlass.SetActive(false);
                 _pistol.SetActive(true);
-                _musket.SetActive(false);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                _weaponSelect = 3;
-                _cutlass.SetActive(false);
-                _pistol.SetActive(false);
-                _musket.SetActive(true);
             }
             else if (Input.GetKeyDown("x"))
             {
                 _weaponSelect = 0;
                 _cutlass.SetActive(false);
                 _pistol.SetActive(false);
-                _musket.SetActive(false);
             }
 
             if (_weaponSelect == 1)
@@ -71,10 +53,6 @@ namespace CultureFMP
             else if (_weaponSelect == 2)
             {
                 PistolUpdate();
-            }
-            else if (_weaponSelect == 3)
-            {
-                MusketUpdate();
             }
         }
 
@@ -87,11 +65,6 @@ namespace CultureFMP
         {
             
         }
-
-        private void MusketUpdate()
-        {
-            
-        }*/
         
     }
 }
