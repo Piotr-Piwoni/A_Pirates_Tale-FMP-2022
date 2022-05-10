@@ -919,7 +919,7 @@ GameObject:
   - component: {fileID: 4084793772201233395}
   m_Layer: 6
   m_Name: PF_Player
-  m_TagString: MainCamera
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
