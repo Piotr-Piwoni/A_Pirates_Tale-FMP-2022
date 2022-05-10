@@ -2193,18 +2193,6 @@ PrefabInstance:
       propertyPath: cameraManager
       value: 
       objectReference: {fileID: 724311359}
-    - target: {fileID: 5281574280699021562, guid: dd0ff035d7b10014793dc23d30d6a65a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 4.12
-      objectReference: {fileID: 0}
-    - target: {fileID: 5281574280699021562, guid: dd0ff035d7b10014793dc23d30d6a65a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.22
-      objectReference: {fileID: 0}
-    - target: {fileID: 5281574280699021562, guid: dd0ff035d7b10014793dc23d30d6a65a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 3.35
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd0ff035d7b10014793dc23d30d6a65a, type: 3}
 --- !u!1001 &8146119951671680187
