@@ -18,10 +18,6 @@ namespace CultureFMP
 
         public Transform target;
         [SerializeField] private GameObject[] closestTargets;
-        [SerializeField] private Transform walkPoint1;
-        [SerializeField] private Transform walkPoint2;
-        [SerializeField] private Transform walkPoint3;
-        [SerializeField] private Transform walkPoint4;
         public LayerMask whatIsGround;
         public LayerMask whatIsPlayer;
         public float walkPointRange;
@@ -30,8 +26,7 @@ namespace CultureFMP
         public float timeBetweenAttacks;
         public Vector3 walkPoint;
 
-        [SerializeField] private  bool isMoving = true; 
-        [SerializeField] private  bool useCustomPath; 
+        [SerializeField] private  bool isMoving = true;
         public bool playerInSightRange;
         public bool playerInAttackRange;
         
@@ -69,28 +64,10 @@ namespace CultureFMP
             
             playerInSightRange = Physics.CheckSphere(_transformPosition, sightRange, whatIsPlayer);
             playerInAttackRange = Physics.CheckSphere(_transformPosition, attackRange, whatIsPlayer);
-
-            if (!isMoving && useCustomPath) MoveTo();
+            
             if (!playerInAttackRange && !playerInSightRange && isMoving) Patrolling();
             if (!playerInAttackRange && playerInSightRange) ChasePlayer();
             if (playerInAttackRange && playerInSightRange) AttackPlayer();
-        }
-
-        private void MoveTo()
-        {
-            walkPoint1.position = new Vector3(walkPoint1.position.x, transform.position.y, walkPoint1.position.z);
-            walkPoint2.position = new Vector3(walkPoint2.position.x, transform.position.y, walkPoint2.position.z);
-            walkPoint3.position = new Vector3(walkPoint3.position.x, transform.position.y, walkPoint3.position.z);
-            walkPoint4.position = new Vector3(walkPoint4.position.x, transform.position.y, walkPoint4.position.z);
-
-            _agent.SetDestination(walkPoint1.position);
-            Vector3 _distanceToPosition1 = _transformPosition - walkPoint1.position;
-
-            if (_distanceToPosition1.magnitude < 1)
-            {
-                _agent.SetDestination(walkPoint2.position);
-            }
-
         }
 
         private void Patrolling()
