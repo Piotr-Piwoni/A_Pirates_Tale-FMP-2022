@@ -6,11 +6,13 @@ public class Flintlock_Pistol_Script : MonoBehaviour
     private float _fireCooldown;
     private int _currentAmmo;
     [SerializeField] private int ammoCap;
-
+    private LineRenderer lr;
+    [SerializeField] private float lineSpeed;
 
     private void Start()
     {
         _currentAmmo = ammoCap;
+        lr = GetComponent<LineRenderer>();
     }
 
     void Update()
@@ -33,6 +35,9 @@ public class Flintlock_Pistol_Script : MonoBehaviour
 
         Vector3 forward = transform.TransformDirection(Vector3.left) * 10000;
         Debug.DrawRay(transform.position, forward, Color.green);
+
+        Vector3 linePos = Vector3.Lerp(lr.GetPosition(0), lr.GetPosition(1), Time.deltaTime * lineSpeed);
+        lr.SetPosition(0, linePos);
     }
     public void Shoot()
     {
@@ -40,6 +45,9 @@ public class Flintlock_Pistol_Script : MonoBehaviour
         if (Physics.Raycast(gameObject.transform.position, - gameObject.transform.right, out hit)) // Shoots out a raycast that gathers information on what it hits
         {
             Debug.Log(hit.transform.name); // This will show the name of the object that the raycast hits in the console
+
+            lr.SetPosition(0, transform.position);
+            lr.SetPosition(1, hit.point);
 
             if (hit.transform.GetComponent<CultureFMP.Manager.Health_Manager>() != null)
             {
