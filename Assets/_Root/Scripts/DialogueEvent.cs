@@ -9,10 +9,11 @@ namespace CultureFMP
     public class DialogueEvent : MonoBehaviour
     {
          public int idNumber;
+         public string dialogueName;
         public VIDE_Assign videAssign;
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider _other)
         {
-            if (other.CompareTag("Player"))
+            if (_other.CompareTag("Player"))
             {
                 MoveDialogue();
             }
@@ -21,6 +22,11 @@ namespace CultureFMP
         public void MoveDialogue()
         {
             videAssign.overrideStartNode = idNumber;
+        }
+
+        public void ChangeDialogue()
+        {
+            videAssign.assignedDialogue = dialogueName;
         }
     }
 }
