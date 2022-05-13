@@ -9,10 +9,12 @@ namespace CultureFMP
     {
         public void LoadMainMenu()
         {
+            Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadScene("Main Menu");
         }
         public void LoadEndScene()
         {
+            Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadScene("End");
         }
 

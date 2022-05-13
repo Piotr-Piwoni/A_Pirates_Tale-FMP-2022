@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Root/Scenes/Treasure Island.unity
     guid: 3465b7554b5bb494cb1876db29e8847b
+  - enabled: 1
+    path: Assets/_Root/Scenes/End.unity
+    guid: dff3184db0084a542add24fb732f852a
   m_configObjects: {}

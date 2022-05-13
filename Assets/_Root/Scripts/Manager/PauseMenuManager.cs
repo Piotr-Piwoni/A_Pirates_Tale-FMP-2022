@@ -12,7 +12,7 @@ namespace CultureFMP
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.P))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 _pauseMenu.SetActive(true);
                 Time.timeScale = 0f;
