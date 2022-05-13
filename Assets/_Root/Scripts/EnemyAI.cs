@@ -26,7 +26,7 @@ namespace CultureFMP
         public float timeBetweenAttacks;
         public Vector3 walkPoint;
 
-        [SerializeField] private  bool isMoving = true; 
+        [SerializeField] private  bool isMoving = true;
         public bool playerInSightRange;
         public bool playerInAttackRange;
         
@@ -64,7 +64,7 @@ namespace CultureFMP
             
             playerInSightRange = Physics.CheckSphere(_transformPosition, sightRange, whatIsPlayer);
             playerInAttackRange = Physics.CheckSphere(_transformPosition, attackRange, whatIsPlayer);
-
+            
             if (!playerInAttackRange && !playerInSightRange && isMoving) Patrolling();
             if (!playerInAttackRange && playerInSightRange) ChasePlayer();
             if (playerInAttackRange && playerInSightRange) AttackPlayer();
