@@ -9,7 +9,7 @@ namespace CultureFMP
     {
         public void PlayButton()
         {
-            SceneManager.LoadScene("Main Game");
+            SceneManager.LoadScene("Treasure Island");
         }
 
         public void ExitButton()
