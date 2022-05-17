@@ -12,6 +12,12 @@ namespace CultureFMP
             Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadScene("Main Menu");
         }
+
+        public void LoadGame()
+        {
+            SceneManager.LoadScene("Treasure Island");
+        }
+
         public void LoadEndScene()
         {
             Cursor.lockState = CursorLockMode.None;

@@ -43753,7 +43753,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3666480437641872973}
   m_Layer: 0
-  m_Name: Windmill - Broken
+  m_Name: PF_WindmillBroken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7667602682479624065}
   - component: {fileID: 1264448895180423174}
   m_Layer: 0
-  m_Name: Vine Lamps
+  m_Name: PF_VineLamps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

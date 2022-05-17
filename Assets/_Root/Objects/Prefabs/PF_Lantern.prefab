@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 585682095502043298}
   - component: {fileID: 8292674895655281824}
   m_Layer: 0
-  m_Name: Lantern
+  m_Name: PF_Lantern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

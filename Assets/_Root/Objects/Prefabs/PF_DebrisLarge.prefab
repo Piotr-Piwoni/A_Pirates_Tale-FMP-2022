@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 835035390764635742}
   - component: {fileID: 835035390764635743}
   m_Layer: 0
-  m_Name: Debris Large
+  m_Name: PF_DebrisLarge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
