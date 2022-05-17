@@ -8,6 +8,8 @@ public class Flintlock_Pistol_Script : MonoBehaviour
     [SerializeField] private int ammoCap;
     private LineRenderer lr;
     [SerializeField] private float lineSpeed;
+    [SerializeField] private Transform _adsPOS;
+    [SerializeField] private float _adsSpeed;
 
     private void Start()
     {
@@ -33,6 +35,12 @@ public class Flintlock_Pistol_Script : MonoBehaviour
         }
         _fireCooldown = _fireCooldown + Time.deltaTime;
 
+        if (Input.GetMouseButton(1))
+        {
+            //Vector3.Lerp(transform.position, _adsPOS.position, Time.deltaTime * _adsSpeed);
+            transform.position= _adsPOS.position;
+        }
+
         Vector3 forward = transform.TransformDirection(Vector3.left) * 10000;
         Debug.DrawRay(transform.position, forward, Color.green);
 
@@ -44,8 +52,6 @@ public class Flintlock_Pistol_Script : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(gameObject.transform.position, - gameObject.transform.right, out hit)) // Shoots out a raycast that gathers information on what it hits
         {
-            //Debug.Log(hit.transform.name); // This will show the name of the object that the raycast hits in the console
-
             lr.SetPosition(0, transform.position);
             lr.SetPosition(1, hit.point);
 
