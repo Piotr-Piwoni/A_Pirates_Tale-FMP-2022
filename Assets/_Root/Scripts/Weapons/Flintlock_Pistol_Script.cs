@@ -9,6 +9,8 @@ public class Flintlock_Pistol_Script : MonoBehaviour
     private LineRenderer lr;
     [SerializeField] private float lineSpeed;
     [SerializeField] private Transform _adsPOS;
+    [SerializeField] private Transform _handPOS;
+    [SerializeField] private Transform _originPOS;
     [SerializeField] private float _adsSpeed;
 
     private void Start()
@@ -37,8 +39,12 @@ public class Flintlock_Pistol_Script : MonoBehaviour
 
         if (Input.GetMouseButton(1))
         {
-            Vector3.Lerp(transform.position, _adsPOS.position, Time.deltaTime * _adsSpeed);
-            //transform.position= _adsPOS.position;
+            //Vector3.Lerp(_handPOS.position, _adsPOS.position, Time.deltaTime * _adsSpeed);
+            _handPOS.position = _adsPOS.position;
+        }
+        else
+        {
+            _handPOS.position = _originPOS.position;
         }
 
         Vector3 forward = transform.TransformDirection(Vector3.left) * 10000;
