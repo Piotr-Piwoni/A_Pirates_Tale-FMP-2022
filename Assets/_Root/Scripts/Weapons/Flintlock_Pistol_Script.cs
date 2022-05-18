@@ -37,8 +37,8 @@ public class Flintlock_Pistol_Script : MonoBehaviour
 
         if (Input.GetMouseButton(1))
         {
-            //Vector3.Lerp(transform.position, _adsPOS.position, Time.deltaTime * _adsSpeed);
-            transform.position= _adsPOS.position;
+            Vector3.Lerp(transform.position, _adsPOS.position, Time.deltaTime * _adsSpeed);
+            //transform.position= _adsPOS.position;
         }
 
         Vector3 forward = transform.TransformDirection(Vector3.left) * 10000;
