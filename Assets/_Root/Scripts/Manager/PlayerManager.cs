@@ -12,6 +12,7 @@ namespace CultureFMP.Manager
         private InputManager _inputManager;
         private CharacterLocomotion _characterLocomotion;
         private CameraManager _cameraManager;
+        private AnimatorManager _animatorManager;
         [SerializeField] private VIDE_Assign _currentDialogue;
         
         public DialogueManager dialogueManager;
@@ -24,6 +25,7 @@ namespace CultureFMP.Manager
             _inputManager = GetComponent<InputManager>();
             _characterLocomotion = GetComponent<CharacterLocomotion>();
             _cameraManager = FindObjectOfType<CameraManager>();
+            _animatorManager = GetComponent<AnimatorManager>();
         }
 
         private void Update()
@@ -31,10 +33,14 @@ namespace CultureFMP.Manager
             _inputManager.HandleAllInputs();
 
             if (VD.isActive)
+            {
                 inDialogue = true;
+                _animatorManager.PlayAnimationInDialogue(inDialogue);
+            }
             else
             {
                 inDialogue = false;
+                _animatorManager.PlayAnimationInDialogue(inDialogue);
             }
             
             if (Input.GetKeyDown(KeyCode.E))

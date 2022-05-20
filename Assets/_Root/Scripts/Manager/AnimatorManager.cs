@@ -8,6 +8,7 @@ namespace CultureFMP.Manager
     {
         [HideInInspector]
         public Animator animator;
+        public Animator npcAnimator;
         public PlayerManager playerManager;
         
         private int _horizontal;
@@ -24,6 +25,11 @@ namespace CultureFMP.Manager
         {
             animator.SetBool("isInteracting", _isInteracting);
             animator.CrossFade(_targetAnimation, 0.2f);
+        }
+
+        public void PlayAnimationInDialogue(bool _inDialogue)
+        {
+            npcAnimator.SetBool("InDialogue", _inDialogue);
         }
 
         public void UpdateAnimatorValues(float _horizontalMovement, float _verticalMovement, bool _isSprinting)
@@ -86,6 +92,14 @@ namespace CultureFMP.Manager
             
             animator.SetFloat(_horizontal, _snappedHorizontal, 0.1f, Time.deltaTime);
             animator.SetFloat(_vertical, _snappedVertical, 0.1f, Time.deltaTime);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.GetComponent<Animator>() != null)
+            {
+                npcAnimator = other.GetComponent<Animator>();
+            }
         }
     }
 }
