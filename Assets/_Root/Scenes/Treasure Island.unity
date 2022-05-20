@@ -6349,6 +6349,10 @@ PrefabInstance:
       propertyPath: zTilt
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 3922164094037292931, guid: db9d24cef72aef04d8089ad34d96a564, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4228663064171820450, guid: db9d24cef72aef04d8089ad34d96a564, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
