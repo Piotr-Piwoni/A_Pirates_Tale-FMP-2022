@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Cutlass : MonoBehaviour
 {
     private Collider _myCol;
-    private Animator anim;
+    public Animator anim;
 
     private void Start()
     {
         _myCol = gameObject.GetComponent<Collider>();
-        anim = GetComponent<Animator>();
+        anim = GetComponentInParent<Animator>();
     }
 
     private void Update()
@@ -18,22 +16,21 @@ public class Cutlass : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             anim.SetTrigger("swipe");
-            // Here the animation for the cutlass swing will go
-            // Once the animation is implemted I will also toggle the collider on during the animation and off after it to avoid any collsion problems using Collider.enable
-        }
-
-        if (Input.GetMouseButton(1))
-        {
-            //Here the animation for blocking with the cutlass will go
-            //While the player is using the cutlass block, I will stop it from taking damage
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Enemy")
+/*        if (other.gameObject.tag == "Enemy")
         {
             Debug.Log("Hit");
+        }*/
+
+        if (other.transform.GetComponent<CultureFMP.Manager.Health_Manager>() != null)
+        {
+            var enemyHealth = GameObject.Find(other.transform.name).GetComponent<CultureFMP.Manager.Health_Manager>();
+            enemyHealth.currentHealth -= 33.4f;
+            Debug.Log(enemyHealth.currentHealth);
         }
     }
 }
