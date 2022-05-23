@@ -26,6 +26,11 @@ namespace CultureFMP.Manager
             animator.CrossFade(_targetAnimation, 0.2f);
         }
 
+        public void PlayAnimationInDialogue(Animator _animator , bool _inDialogue)
+        {
+            _animator.SetBool("InDialogue", _inDialogue);
+        }
+
         public void UpdateAnimatorValues(float _horizontalMovement, float _verticalMovement, bool _isSprinting)
         {
             float _snappedHorizontal;

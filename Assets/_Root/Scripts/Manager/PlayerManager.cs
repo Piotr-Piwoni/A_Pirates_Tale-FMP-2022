@@ -9,9 +9,11 @@ namespace CultureFMP.Manager
     public class PlayerManager : MonoBehaviour
     {
         private Animator _animator;
+        public Animator npcAnimator = null;
         private InputManager _inputManager;
         private CharacterLocomotion _characterLocomotion;
         private CameraManager _cameraManager;
+        private AnimatorManager _animatorManager;
         [SerializeField] private VIDE_Assign _currentDialogue;
         
         public DialogueManager dialogueManager;
@@ -24,6 +26,8 @@ namespace CultureFMP.Manager
             _inputManager = GetComponent<InputManager>();
             _characterLocomotion = GetComponent<CharacterLocomotion>();
             _cameraManager = FindObjectOfType<CameraManager>();
+            _animatorManager = GetComponent<AnimatorManager>();
+            npcAnimator = _animator;
         }
 
         private void Update()
@@ -31,16 +35,18 @@ namespace CultureFMP.Manager
             _inputManager.HandleAllInputs();
 
             if (VD.isActive)
+            {
                 inDialogue = true;
+                _animatorManager.PlayAnimationInDialogue(npcAnimator, inDialogue);
+            }
             else
             {
                 inDialogue = false;
+                _animatorManager.PlayAnimationInDialogue(npcAnimator, inDialogue);
             }
             
             if (Input.GetKeyDown(KeyCode.E))
-            {
                 TryInteract();
-            }
         }
 
         
@@ -61,9 +67,10 @@ namespace CultureFMP.Manager
         private void OnTriggerEnter(Collider _other)
         {
             if (_other.GetComponent<VIDE_Assign>() != null)
-            {
                 _currentDialogue = _other.GetComponent<VIDE_Assign>();
-            }
+            
+            if (_other.GetComponent<Animator>() != null)
+                npcAnimator = _other.GetComponent<Animator>();
         }
 
         private void OnTriggerExit(Collider _other)
