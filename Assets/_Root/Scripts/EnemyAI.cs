@@ -12,9 +12,11 @@ namespace CultureFMP
     public class EnemyAI : MonoBehaviour
     {
         private NavMeshAgent _agent;
+        private Animator _animator;
         private Vector3 _transformPosition;
         private bool _walkPointSet;
         private bool _alreadyAttacked;
+        private bool _isMoving;
 
         public Transform target;
         [SerializeField] private GameObject[] closestTargets;
@@ -36,6 +38,7 @@ namespace CultureFMP
             target = null;
             target = GameObject.FindWithTag("Player").transform;
             _agent = GetComponent<NavMeshAgent>();
+            _animator = GetComponent<Animator>();
         }
 
         private Transform TargetWithinRange()
@@ -76,10 +79,17 @@ namespace CultureFMP
 
             _agent.SetDestination(walkPoint);
 
+            _isMoving = true;
+            _animator.SetBool("isMoving", _isMoving);
+
             Vector3 _distanceToPosition = _transformPosition - walkPoint;
 
             if (_distanceToPosition.magnitude < 1)
+            {
                 _walkPointSet = false;
+                isMoving = false;
+                _animator.SetBool("isMoving", _isMoving);
+            }
         }
 
         private void SearchWalkPoint()
@@ -97,6 +107,12 @@ namespace CultureFMP
         private void ChasePlayer()
         {
             _agent.SetDestination(target.position);
+
+            Vector3 _distanceToTarget = _transformPosition - target.position;
+
+            if (_distanceToTarget.magnitude! < 1)
+                _isMoving = true;
+            _animator.SetBool("isMoving", _isMoving);
         }
 
         private void AttackPlayer()
