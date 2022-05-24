@@ -15,6 +15,7 @@ namespace CultureFMP
             if (transform.position == tpLocation.position)
             {
                 dialogueEvent.colleted = true;
+                dialogueEvent.ChangeDialogue();
             }
         }
 

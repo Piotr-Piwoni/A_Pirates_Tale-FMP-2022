@@ -27,7 +27,8 @@ namespace CultureFMP.Dialogue
 
         public void ChangeDialogue()
         {
-            videAssign.assignedDialogue = dialogueName;
+            if (colleted)
+                videAssign.assignedDialogue = dialogueName;
         }
 
         public void Collected()
@@ -37,6 +38,7 @@ namespace CultureFMP.Dialogue
                 videAssign.overrideStartNode = idNumber;
             }
         }
+        
 
         
     }
