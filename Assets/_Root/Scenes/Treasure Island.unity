@@ -952,6 +952,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b71ec71945b9af84db6deedcd0bec03a, type: 3}
   m_PrefabInstance: {fileID: 49387550}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &51764465 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 82154243139287718, guid: dd0ff035d7b10014793dc23d30d6a65a, type: 3}
+  m_PrefabInstance: {fileID: 446820309}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 543398d1d1c4f754b94efe21dafed491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &52797978
 GameObject:
   m_ObjectHideFlags: 0
@@ -5086,6 +5097,7 @@ GameObject:
   m_Component:
   - component: {fileID: 310993035}
   - component: {fileID: 310993036}
+  - component: {fileID: 310993037}
   m_Layer: 5
   m_Name: Videos
   m_TagString: Untagged
@@ -5131,7 +5143,7 @@ VideoPlayer:
   m_RenderMode: 1
   m_AspectRatio: 2
   m_DataSource: 0
-  m_PlaybackSpeed: 1
+  m_PlaybackSpeed: 1.5
   m_AudioOutputMode: 2
   m_TargetAudioSources: []
   m_DirectAudioVolumes: []
@@ -5140,11 +5152,25 @@ VideoPlayer:
   m_DirectAudioMutes: 
   m_ControlledAudioTrackCount: 0
   m_PlayOnAwake: 1
-  m_SkipOnDrop: 1
+  m_SkipOnDrop: 0
   m_Looping: 0
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
+--- !u!114 &310993037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310993034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 777091e10787dd148863f7971e4e000c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerManager: {fileID: 51764465}
+  reduceClipTime: 15
 --- !u!1 &315696078 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 431a30cce35cc1e48a03004a61709ce6, type: 3}
@@ -23400,6 +23426,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7654668103601338477, guid: 01a93e6ddcadc4b4a9db576aa0652d59, type: 3}
+      propertyPath: videoPlayer
+      value: 
+      objectReference: {fileID: 310993036}
     - target: {fileID: 7654668103601338480, guid: 01a93e6ddcadc4b4a9db576aa0652d59, type: 3}
       propertyPath: m_Name
       value: PauseMenu

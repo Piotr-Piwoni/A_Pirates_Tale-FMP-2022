@@ -50,7 +50,7 @@ namespace CultureFMP.Movement
         {
             HandleFallingAndLanding();
             
-            if (_playerManager.isInteracting || _playerManager.inDialogue)
+            if (_playerManager.isInteracting || _playerManager.inDialogue || _playerManager.inCutscene)
                 return;
             HandleMovement();
             HandleRotation();

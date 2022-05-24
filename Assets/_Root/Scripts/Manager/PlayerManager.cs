@@ -19,6 +19,7 @@ namespace CultureFMP.Manager
         public DialogueManager dialogueManager;
         public bool isInteracting;
         public bool inDialogue;
+        public bool inCutscene;
 
         private void Awake()
         {

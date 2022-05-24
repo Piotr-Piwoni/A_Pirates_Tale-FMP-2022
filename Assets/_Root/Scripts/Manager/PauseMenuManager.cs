@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 namespace CultureFMP
 {
@@ -10,12 +11,15 @@ namespace CultureFMP
         [SerializeField] private GameObject _pauseButtons;
         [SerializeField] private GameObject _optionsButtons;
 
+        public VideoPlayer videoPlayer;
+
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 _pauseMenu.SetActive(true);
                 Time.timeScale = 0f;
+                videoPlayer.Pause();
                 Cursor.lockState = CursorLockMode.None;
             }
         }
@@ -24,6 +28,7 @@ namespace CultureFMP
         {
             _pauseMenu.SetActive(false);
             Time.timeScale = 1.0f;
+            videoPlayer.Play();
             Cursor.lockState = CursorLockMode.Locked;
         }
 
