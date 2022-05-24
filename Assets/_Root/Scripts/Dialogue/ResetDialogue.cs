@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CultureFMP
+namespace CultureFMP.Dialogue
 {
     public class ResetDialogue : MonoBehaviour
     {

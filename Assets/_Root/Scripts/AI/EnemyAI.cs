@@ -6,7 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-namespace CultureFMP
+namespace CultureFMP.AI
 {
     [RequireComponent(typeof(NavMeshAgent))]
     public class EnemyAI : MonoBehaviour
