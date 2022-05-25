@@ -8,11 +8,18 @@ public class Flintlock_Pistol_Script : MonoBehaviour
     [SerializeField] private int ammoCap;
     private LineRenderer lr;
     [SerializeField] private float lineSpeed;
+    [SerializeField] private Transform _adsPOS;
+    [SerializeField] private GameObject _handPOS;
+    [SerializeField] private Transform _originPOS;
+    [SerializeField] private float _adsSpeed;
+
+    private Animator _hand_anim;
 
     private void Start()
     {
         _currentAmmo = ammoCap;
         lr = GetComponent<LineRenderer>();
+        _hand_anim = _handPOS.GetComponent<Animator>();
     }
 
     void Update()
@@ -25,6 +32,7 @@ public class Flintlock_Pistol_Script : MonoBehaviour
                 _fireCooldown = 0f;
                 Shoot();
                 //Sound and animation trigger for shot should be here
+                _hand_anim.SetTrigger("shoot");
             }
             else
             {
@@ -32,6 +40,16 @@ public class Flintlock_Pistol_Script : MonoBehaviour
             }
         }
         _fireCooldown = _fireCooldown + Time.deltaTime;
+
+        if (Input.GetMouseButton(1))
+        {
+            //Vector3.Lerp(_handPOS.position, _adsPOS.position, Time.deltaTime * _adsSpeed);
+            _handPOS.transform.position = _adsPOS.position;
+        }
+        else
+        {
+            _handPOS.transform.position = _originPOS.position;
+        }
 
         Vector3 forward = transform.TransformDirection(Vector3.left) * 10000;
         Debug.DrawRay(transform.position, forward, Color.green);
@@ -44,15 +62,13 @@ public class Flintlock_Pistol_Script : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(gameObject.transform.position, - gameObject.transform.right, out hit)) // Shoots out a raycast that gathers information on what it hits
         {
-            //Debug.Log(hit.transform.name); // This will show the name of the object that the raycast hits in the console
-
             lr.SetPosition(0, transform.position);
             lr.SetPosition(1, hit.point);
 
             if (hit.transform.GetComponent<CultureFMP.Manager.Health_Manager>() != null)
             {
                 var enemyHealth = GameObject.Find(hit.transform.name).GetComponent<CultureFMP.Manager.Health_Manager>();
-                enemyHealth.currentHealth -= 25.0f;
+                enemyHealth.currentHealth -= 33.4f;
                 Debug.Log(enemyHealth.currentHealth);
             }
         }

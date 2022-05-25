@@ -45,26 +45,6 @@ namespace CultureFMP
                 _cutlass.SetActive(false);
                 _pistol.SetActive(false);
             }
-
-            if (_weaponSelect == 1)
-            {
-                CutlassUpdate();
-            }
-            else if (_weaponSelect == 2)
-            {
-                PistolUpdate();
-            }
         }
-
-        private void CutlassUpdate()
-        {
-            
-        }
-
-        private void PistolUpdate()
-        {
-            
-        }
-        
     }
 }
