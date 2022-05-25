@@ -8123,6 +8123,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 75408435, guid: dd0ff035d7b10014793dc23d30d6a65a, type: 3}
+      propertyPath: m_Name
+      value: Saber Parent
+      objectReference: {fileID: 0}
     - target: {fileID: 211060645, guid: dd0ff035d7b10014793dc23d30d6a65a, type: 3}
       propertyPath: ammoCap
       value: 214700000
@@ -8199,6 +8203,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1.6
       objectReference: {fileID: 0}
+    - target: {fileID: 3140339819499532157, guid: dd0ff035d7b10014793dc23d30d6a65a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4084793772201233395, guid: dd0ff035d7b10014793dc23d30d6a65a, type: 3}
       propertyPath: _pistol
       value: 
@@ -8242,6 +8250,18 @@ PrefabInstance:
     - target: {fileID: 5542272302744784122, guid: dd0ff035d7b10014793dc23d30d6a65a, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530719222138195722, guid: dd0ff035d7b10014793dc23d30d6a65a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530719222138195722, guid: dd0ff035d7b10014793dc23d30d6a65a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530719222138195722, guid: dd0ff035d7b10014793dc23d30d6a65a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7802155719136320335, guid: dd0ff035d7b10014793dc23d30d6a65a, type: 3}
       propertyPath: m_RootOrder
@@ -16079,6 +16099,7 @@ MonoBehaviour:
   - CrazyCap
   - CrewMember1
   - CrewMember2
+  - CrewMember3
   - DEMO_Condition
   - demo_Narration
   - Example3Dialogue
@@ -16088,17 +16109,14 @@ MonoBehaviour:
   - MrCube
   - NPCOnly
   - QuestChartDemo
-  - Stealing
-  - Test
-  - test2
+  - Theif
   - TriggeredDude
-  - Veriabletest
   - Vided
   - vided2
   - Witch
-  assignedIndex: 15
-  assignedID: 30015
-  assignedDialogue: Stealing
+  assignedIndex: 6
+  assignedID: 43554
+  assignedDialogue: CrewMember3
   interactionCount: 0
   alias: 
   overrideStartNode: -1
@@ -16373,6 +16391,7 @@ MonoBehaviour:
   - Stealing
   - Test
   - test2
+  - Theif
   - TriggeredDude
   - Veriabletest
   - Vided
@@ -32879,7 +32898,10 @@ MonoBehaviour:
   - QuestChartDemo
   - Stealing
   - Test
+  - test2
+  - Theif
   - TriggeredDude
+  - Veriabletest
   - Vided
   - vided2
   - Witch
@@ -43174,7 +43196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a2fdd51fa79f914ebdb213f5cc56db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idNumber: 0
+  idNumber: -1
   dialogueName: Theif
   videAssign: {fileID: 963458144}
   colleted: 0

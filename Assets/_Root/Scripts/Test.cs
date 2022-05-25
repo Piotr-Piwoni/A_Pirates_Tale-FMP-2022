@@ -16,6 +16,7 @@ namespace CultureFMP
             {
                 dialogueEvent.colleted = true;
                 dialogueEvent.ChangeDialogue();
+                dialogueEvent.MoveDialogue();
             }
         }
 
