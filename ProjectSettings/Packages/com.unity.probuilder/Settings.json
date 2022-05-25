@@ -206,12 +206,12 @@
             {
                 "type": "UnityEditor.ProBuilder.Actions.Export+ExportFormat, Unity.ProBuilder.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "export.format",
-                "value": "{\"m_Value\":4}"
+                "value": "{\"m_Value\":3}"
             },
             {
                 "type": "UnityEditor.ProBuilder.Actions.ExportAssetOptions, Unity.ProBuilder.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "export.assetOptions",
-                "value": "{\"m_Value\":{\"makePrefab\":true,\"replaceOriginal\":false}}"
+                "value": "{\"m_Value\":{\"makePrefab\":false,\"replaceOriginal\":false}}"
             },
             {
                 "type": "UnityEngine.ProBuilder.Stl.FileType, Unity.ProBuilder.Stl, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
