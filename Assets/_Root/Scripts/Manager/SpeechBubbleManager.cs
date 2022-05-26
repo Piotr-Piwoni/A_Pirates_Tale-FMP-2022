@@ -20,14 +20,14 @@ namespace CultureFMP
 
         public void YellowToWhite()
         {
-            _yelowBubble.SetActive(true);
-            _whiteBubble.SetActive(false);
+            _yelowBubble.SetActive(false) ;
+            _whiteBubble.SetActive(true);
         }
 
         public void WhiteToYellow()
         {
-            _yelowBubble.SetActive(false);
-            _whiteBubble.SetActive(true);
+            _yelowBubble.SetActive(true);
+            _whiteBubble.SetActive(false);
         }
 
         public void NoBubbles()

@@ -35,6 +35,9 @@ namespace CultureFMP.Manager
         {
             _inputManager.HandleAllInputs();
 
+            if (npcAnimator == null)
+                npcAnimator = _animator;
+
             if (VD.isActive)
             {
                 inDialogue = true;

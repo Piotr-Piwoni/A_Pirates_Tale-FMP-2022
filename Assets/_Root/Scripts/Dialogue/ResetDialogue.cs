@@ -6,12 +6,20 @@ namespace CultureFMP.Dialogue
 {
     public class ResetDialogue : MonoBehaviour
     {
-        public VIDE_Assign videAssign;
+        private VIDE_Assign _videAssign;
+
+        public bool overrideStartingDialogue;
+
+        public string startingDialogue;
         void Start()
         {
-            videAssign = GetComponent<VIDE_Assign>();
-            videAssign.overrideStartNode = -1;
+            _videAssign = GetComponent<VIDE_Assign>();
+
+            _videAssign.overrideStartNode = -1;
+
+            if (overrideStartingDialogue)
+                _videAssign.assignedDialogue = startingDialogue;
         }
-        
+
     }
 }
