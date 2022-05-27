@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace CultureFMP
+namespace CultureFMP.Manager
 {
     public class ScenesManager : MonoBehaviour
     {

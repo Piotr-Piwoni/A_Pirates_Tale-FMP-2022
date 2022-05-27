@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CultureFMP
+namespace CultureFMP.Manager
 {
     public class SpeechBubbleManager : MonoBehaviour
     {

@@ -3,33 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 
-namespace CultureFMP
+namespace CultureFMP.Manager
 {
     public class PauseMenuManager : MonoBehaviour
     {
-        [SerializeField] private GameObject _pauseMenu;
         [SerializeField] private GameObject _pauseButtons;
         [SerializeField] private GameObject _optionsButtons;
 
         public VideoPlayer videoPlayer;
+        public AudioSource cutSceneAudio;
+        public KeyCode pauseKey;
+        public bool isPaused;
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.P))
+            if (Input.GetKeyDown(pauseKey) && !isPaused)
             {
-                _pauseMenu.SetActive(true);
+                _pauseButtons.SetActive(true);
                 Time.timeScale = 0f;
                 videoPlayer.Pause();
+                cutSceneAudio.Pause();
                 Cursor.lockState = CursorLockMode.None;
+                isPaused = true;
             }
         }
 
         public void ReturnButton()
         {
-            _pauseMenu.SetActive(false);
+            _pauseButtons.SetActive(false);
             Time.timeScale = 1.0f;
             videoPlayer.Play();
+            cutSceneAudio.UnPause();
             Cursor.lockState = CursorLockMode.Locked;
+            isPaused = false;
         }
 
         public void ReturnButton2()
