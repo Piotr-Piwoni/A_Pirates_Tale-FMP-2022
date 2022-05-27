@@ -9,6 +9,7 @@ namespace CultureFMP
     public class CutsceneSettings : MonoBehaviour
     {
         private VideoPlayer _videoPlayer;
+        private AudioSource _audioSource;
         public PlayerManager playerManager;
 
         public double reduceClipTime;
@@ -16,6 +17,7 @@ namespace CultureFMP
         private void Awake()
         {
             _videoPlayer = GetComponent<VideoPlayer>();
+            _audioSource = GetComponent<AudioSource>();
             playerManager.inCutscene = true;
         }
 
@@ -29,8 +31,8 @@ namespace CultureFMP
                 _videoPlayer.Stop();
                 _videoPlayer.enabled = false;
                 playerManager.inCutscene = false;
+                _audioSource.volume = 0;
             }
-
         }
     }
 }

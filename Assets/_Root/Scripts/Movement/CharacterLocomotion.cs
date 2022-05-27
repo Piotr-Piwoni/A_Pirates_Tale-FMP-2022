@@ -13,6 +13,7 @@ namespace CultureFMP.Movement
         private Transform _cameraObject;
         private Transform _groundChecker;
         private Vector3 _moveDir;
+        private AudioSource _audioSource;
 
         [Header("Movement Speeds")]
         public float walkingSpeed = 15;
@@ -42,6 +43,7 @@ namespace CultureFMP.Movement
             _playerManager = GetComponent<PlayerManager>();
             _animatorManager = GetComponent<AnimatorManager>();
             _characterRb = GetComponent<Rigidbody>();
+            _audioSource = GetComponent<AudioSource>();
             if (Camera.main != null) _cameraObject = Camera.main.transform;
             _groundChecker = transform.Find("Ground Checker");
         }
@@ -73,9 +75,12 @@ namespace CultureFMP.Movement
                 if (_inputManager.moveAmount >= 0.55f)
                 {
                     _moveDir *= runningSpeed;
+                    _audioSource.volume = 0.5f;
+
                 } else
                 {
                     _moveDir *= walkingSpeed;
+                    _audioSource.volume = 0;
                 }
             }
 

@@ -14,12 +14,14 @@ public class Flintlock_Pistol_Script : MonoBehaviour
     [SerializeField] private float _adsSpeed;
 
     private Animator _hand_anim;
+    private AudioSource _audio;
 
     private void Start()
     {
         _currentAmmo = ammoCap;
         lr = GetComponent<LineRenderer>();
         _hand_anim = _handPOS.GetComponent<Animator>();
+        _audio = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -31,12 +33,8 @@ public class Flintlock_Pistol_Script : MonoBehaviour
                 _currentAmmo--;
                 _fireCooldown = 0f;
                 Shoot();
-                //Sound and animation trigger for shot should be here
                 _hand_anim.SetTrigger("shoot");
-            }
-            else
-            {
-                //Sound trigger for no ammo sound should be here
+                _audio.Play();
             }
         }
         _fireCooldown = _fireCooldown + Time.deltaTime;
